@@ -9,25 +9,30 @@ const createError = require('http-errors');
 router.get('/scores', async (req, res, next) => {
   try {
     const scores = {
-      today: [
-        { handle: 'ease', score: 100, avatar: '', top: true },
-        { handle: 'ease', score: 100, avatar: '', top: true },        { handle: 'ease', score: 100, avatar: '', top: true },
-        { handle: 'ease', score: 100, avatar: '', top: true },
-        { handle: 'ease', score: 100, avatar: '', top: true },
-        { handle: 'ease', score: 100, avatar: '', top: true },
-      ],
-      alltime: [
-        { handle: 'scoe', score: 100, avatar: '', top: true },
-        { handle: 'scoe', score: 100, avatar: '', top: true },
-        { handle: 'scoe', score: 100, avatar: '', top: true },
-        { handle: 'scoe', score: 100, avatar: '', top: false },
-        { handle: 'scoe', score: 100, avatar: '', top: false },
-      ]
+      today: generateScores('ease').sort((a, b) => b.score - a.score),
+      alltime: generateScores('scoe').sort((a, b) => b.score - a.score)
     }
     return res.json({ scores });
   } catch (error) {
     return next(createError(500, error.message));
   }
 });
+
+function generateScores(handle) {
+  const scores = [];
+  for (let i = 0; i < 25; i++) {
+    scores.push({
+      handle: handle,
+      score: generateScore(),
+      avatar: '',
+      top: true
+    });
+  }
+  return scores;
+}
+
+function generateScore() {
+  return Math.floor(Math.random() * 1000000);
+}
 
 module.exports = router;
