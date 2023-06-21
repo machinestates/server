@@ -23,7 +23,7 @@ function generateScores(handle) {
   for (let i = 0; i < 25; i++) {
     scores.push({
       handle: handle,
-      score: generateScore(),
+      score: generateRandomScore(),
       avatar: '',
       top: true
     });
@@ -31,7 +31,7 @@ function generateScores(handle) {
   return scores;
 }
 
-function generateScore() {
+function generateRandomScore() {
   return Math.floor(Math.random() * 1000000);
 }
 
