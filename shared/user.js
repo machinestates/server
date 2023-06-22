@@ -56,13 +56,15 @@ async function emailExists(email) {
  */
 async function getById(id) {
   return await User.findOne({
-      attributes: [
-        'id', 'username', 'email'
-      ],
       where: { id }
   });
 }
 
+/**
+ * @author Ease <ease@machinestates.com>
+ * @param {string} emailOrUsername 
+ * @returns 
+ */
 async function getByEmailOrUsername(emailOrUsername) {
   if (isEmail(emailOrUsername)) {
     return await User.findOne({
@@ -93,6 +95,18 @@ async function getByEmailOrUsername(emailOrUsername) {
   return user ? true : false;
 }
 
+function getUserProperties(user) {
+  return {
+      uuid: user.uuid,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar,
+      bio: user.bio,
+      createdAt: user.createdAt,
+      token: user.token
+  }
+}
+
 /**
  *
  * @param {string} username
@@ -110,5 +124,6 @@ module.exports = {
   usernameExists,
   remove,
   getById,
-  getByEmailOrUsername
+  getByEmailOrUsername,
+  getUserProperties
 }

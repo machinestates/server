@@ -1,0 +1,220 @@
+{
+  "exchanges": [
+    {
+      "name": "TENT CITY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-tent-city-600.png",
+      "danger": 0,
+      "minCoins": 3,
+      "maxCoins": 5,
+      "hasLoan": false,
+      "hasStore": false
+    },
+    {
+      "name": "FEDERAL COIN SERVICE",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-federal-coin-service-600.png",
+      "danger": 15,
+      "minCoins": 7,
+      "maxCoins": 8,
+      "hasLoan": false,
+      "hasStore": false
+    },
+    {
+      "name": "PLASMANET",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-plasmanet-600.png",
+      "danger": 25,
+      "minCoins": 5,
+      "hasLoan": true,
+      "hasStore": false
+    },
+    {
+      "name": "VYPR",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-vypr-600.png",
+      "danger": 45,
+      "minCoins": 10,
+      "hasLoan": false,
+      "hasStore": false
+    },
+    {
+      "name": "UNIT COLONY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-unit-colony-600.png",
+      "danger": 10,
+      "minCoins": 5,
+      "maxCoins": 7,
+      "hasLoan": false,
+      "hasStore": false
+    },
+    {
+      "name": "CHARLOTTESWEB",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-charlottes-web-600.png",
+      "danger": 5,
+      "minCoins": 4,
+      "maxCoins": 8,
+      "hasLoan": false,
+      "hasStore": false
+    },
+    {
+      "name": "VEGA CITY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-vega-city-600.png",
+      "danger": 35,
+      "minCoins": 8,
+      "maxCoins": 9,
+      "hasLoan": false,
+      "hasStore": true
+    },
+    {
+      "name": "PORT 23",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-port23-600.png",
+      "danger": 25,
+      "minCoins": 7,
+      "maxCoins": 8,
+      "hasLoan": false,
+      "hasStore": true
+    },
+    {
+      "name": "JADE ROAD",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-jade-road-600.png",
+      "danger": 35,
+      "minCoins": 8,
+      "hasLoan": false,
+      "hasStore": true
+    },
+    {
+      "name": "WI-FU",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-wi-fu-600.png",
+      "danger": 25,
+      "minCoins": 3,
+      "hasLoan": false,
+      "hasStore": false
+    }
+  ],
+  "coins": [
+    {
+      "name": "SPECTR",
+      "uuid": "1949a388-5ad8-4e89-8309-747ae709b8db",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-spectr-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/spectr-token-64.png",
+      "minimumPrice": 1000,
+      "maximumPrice": 4400,
+      "cheap": {
+        "minimumPrice": 400,
+        "maximumPrice": 1100
+      },
+      "expensive": {
+        "minimumPrice": 5000,
+        "maximumPrice": 8000
+      }
+    },
+    {
+      "name": "HASHCOIN",
+      "uuid": "41f97144-79dd-4a6b-820e-3788b209b805",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-hashcoin-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/hashcoin-token-64.png",
+      "minimumPrice": 15000,
+      "maximumPrice": 29000,
+      "expensive": {
+        "minimumPrice": 40000,
+        "maximumPrice": 70000
+      }
+    },
+    {
+      "name": "KAIOTE",
+      "uuid": "19f7e26d-3a95-4e25-bea6-3d34cab8d804",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-kaiote-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/kaiote-token-64.png",
+      "minimumPrice": 480,
+      "maximumPrice": 1280,
+      "cheap": {
+        "minimumPrice": 130,
+        "maximumPrice": 400
+      }
+    },
+    {
+      "name": "QTAP",
+      "uuid": "645480d6-74a1-4b26-8cc7-4c1e0f446860",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-qtap-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/qtap-token-64.png",
+      "minimumPrice": 5500,
+      "maximumPrice": 13000,
+      "expensive": {
+        "minimumPrice": 12000,
+        "maximumPrice": 19000
+      }
+    },
+    {
+      "name": "CACHE",
+      "uuid": "c50e6f9c-d8ad-4b81-93ac-db65b162a7f3",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-cache-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/cache-token-64.png",
+      "minimumPrice": 20,
+      "maximumPrice": 120,
+      "cheap": {
+        "minimumPrice": 5,
+        "maximumPrice": 40
+      },
+      "expensive": {
+        "minimumPrice": 250,
+        "maximumPrice": 500
+      }
+    },
+    {
+      "name": "YEM",
+      "uuid": "ddbb61af-f13f-4a30-96e4-3b15ad1b5643",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-yem-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/yem-token-64.png",
+      "minimumPrice": 1500,
+      "maximumPrice": 4400
+    },
+    {
+      "name": "SYNTHGANIX",
+      "uuid": "670f3205-14b0-483b-b121-4fa66ed1dd9d",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-synthganix-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/synthganix-token-64.png",
+      "minimumPrice": 540,
+      "maximumPrice": 1250,
+      "expensive": {
+        "minimumPrice": 3400,
+        "maximumPrice": 6800
+      }
+    },
+    {
+      "name": "HYPRCHAIN",
+      "uuid": "fd8631ec-39de-4afe-8c25-453d835476b2",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-hyprchain-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/hyprchain-token-64.png",
+      "minimumPrice": 1000,
+      "maximumPrice": 2500
+    },
+    {
+      "name": "PLATELETS",
+      "uuid": "f9699fd2-af56-48eb-83f4-4c4fdf73c5b3",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-platelets-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/platelets-token-64.png",
+      "minimumPrice": 630,
+      "maximumPrice": 1300
+    },
+    {
+      "name": "1337",
+      "uuid": "174b3e8c-6a8c-47f0-baf4-7c71d026b0d3",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-1337-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/1337-token-64.png",
+      "minimumPrice": 90,
+      "maximumPrice": 250,
+      "expensive": {
+        "minimumPrice": 2000,
+        "maximumPrice": 5000
+      }
+    },
+    {
+      "name": "PSYONIC",
+      "uuid": "7827932a-0c66-4331-82f9-6b77b41e10a7",
+      "image": "https://megacity-assets.s3.amazonaws.com/coin-psyonic-600.jpg",
+      "iconImage": "https://megacity-assets.s3.amazonaws.com/psyonic-token-64.png",
+      "minimumPrice": 315,
+      "maximumPrice": 890,
+      "cheap": {
+        "minimumPrice": 60,
+        "maximumPrice": 220
+      }
+    }
+  ]
+}

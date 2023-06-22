@@ -43,9 +43,7 @@ router.post('/', async (req, res, next) => {
       user.token = JWT.generate(
         { id: user.id, email: user.email }, '60d'
       );
-      return res.json({ user: {
-        id: user.id, email: user.email, token: user.token, username: user.username
-      } });
+      return res.json({ user: User.getUserProperties(user) });
     } catch (error) {
       return next(createError(500, error.message));
     }
@@ -73,9 +71,7 @@ router.post('/me', async (req, res, next) => {
     if (await Password.verify(password, hash)) {
       // Success:
       user.token = JWT.generate({ id: user.id, email: user.email }, '60d');
-      return res.json({ user: {
-        id: user.id, email: user.email, token: user.token, username: user.username
-      } });
+      return res.json({ user: User.getUserProperties(user)  });
     } else {
       return next(createError(404, 'Incorrect username/email and/or password.'));
     }
@@ -96,7 +92,7 @@ router.get('/me', passport.authenticate('jwt', { session: false }), async (req, 
     const user = await User.getById(userId);
     return res.json({
       user: {
-        ...user.dataValues,
+        ...User.getUserProperties(user.dataValues),
         token: req.headers.authorization.replace('Bearer ', ''),
       }
     });
