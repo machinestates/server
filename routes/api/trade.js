@@ -1,6 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
+const passport = require('passport');
+
+const User = require('../../shared/user');
+const Game = require('../../shared/game');
+
+router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) return next(createError(401));
+
+  try {
+    const user = await User.getById(userId);
+    const game = new Game(user.username);
+
+    return res.json({ game });
+
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
 
 /**
  * @route GET api/trade/scores
