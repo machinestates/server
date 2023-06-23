@@ -3,18 +3,18 @@ const { v4 } = require('uuid');
 const exchanges = require('../data/game').exchanges;
 const coins = require('../data/game').coins;
 const GameExchange = require('./game-exchange');
+const GameInventory = require('./game-inventory');
 
 class Game {
   constructor(handle) {
     this.uuid = v4();
     this.handle = handle.toLowerCase();
     this.complete = false;
-    this.inProgress = true;
     this.day = 1;
     this.lastDay = 15;
     this.exchanges = exchanges;
     this.exchange = this.getInitialExchange();
-    this.inventory = null;
+    this.inventory = new GameInventory(this.handle);
     this.itemsUsed = [];
     this.ghosted = false;
   }
