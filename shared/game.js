@@ -34,6 +34,50 @@ class Game {
       const quantity = _.get(body, 'quantity');
       return Game.sell(game, name, quantity);
     }
+
+    if (action === 'buy') {
+      const name = _.get(body, 'coin');
+      const quantity = _.get(body, 'quantity');
+      return Game.buy(game, name, quantity);
+    }
+  }
+
+  static canBuy(game, name, quantity) {
+    // Checks exchange for coin:
+    const coin = _.find(_.get(game, 'exchange.coins'), {name});
+    if (!coin) return false;
+
+    // Checks inventory fiatcoin:
+    const cost = (_.get(coin, 'price') * quantity);
+    const fiatcoin = _.get(game, 'inventory.fiatcoin');
+    return (fiatcoin >= cost);
+  }
+
+  static buy(game, name, quantity) {
+    if (Game.canBuy(game, name, quantity)) {
+      const coin = _.find(_.get(game, 'exchange.coins'), {name});
+
+      // Subtract fiatcoin:
+      game.inventory.fiatcoin -= coin.price * quantity;
+
+      // Add coin:
+      const item = _.findIndex(game.inventory.coins, { name });
+      if (!game.inventory.coins[item]) {
+        game.inventory.coins.push({
+          name: _.get(coin, 'name'),
+          amount: quantity,
+          uuid: _.get(coin, 'uuid'),
+          image: _.get(coin, 'image') || '',
+          iconImage: _.get(coin, 'iconImage') || '',
+          squareImage: _.get(coin, 'squareImage') || '',
+          description: _.get(coin, 'description') || ''
+        });
+      } else {
+        game.inventory.coins[item].amount += quantity;
+      }
+
+      return game;
+    }
   }
 
   static canSell(game, name, quantity) {

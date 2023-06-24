@@ -1,5 +1,8 @@
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/redis.json')[env];
+
 const { createClient } = require('redis');
-const client = createClient();
+const client = createClient(config);
 
 async function setGameState(uuid, state) {
   await client.connect();
