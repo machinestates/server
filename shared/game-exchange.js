@@ -12,16 +12,43 @@ class GameExchange {
     this.hasStore = exchange.hasStore;
     this.hasDanger = GameExchange.getDanger(exchange.danger, ghosted);
     this.coins = GameExchange.getCoinPrices(exchange, coins);
+    this.ensureCacheAtTentCity(coins);
   }
 
 
-    static isCheap(coin, chance = 5) {
-      return _.get(coin, 'cheap') && (GameExchange.getRandomInteger(0, 100) < chance);
+  /**
+   * @author Ease <ease@machinestates.com>
+   * Ensures that the CACHE coin is always available at TENT CITY
+   */
+  ensureCacheAtTentCity(coins) {
+    if (this.name === 'TENT CITY') {
+      const cache = _.find(this.coins, { name: 'CACHE' });
+      if (!cache) {
+        const coin = _.find(coins, { name: 'CACHE' });
+        this.coins.push({
+          name: _.get(coin, 'name'),
+          iconImage: _.get(coin, 'iconImage'),
+          image: _.get(coin, 'image'),
+          squareImage: _.get(coin, 'squareImage'),
+          description: _.get(coin, 'description'),
+          uuid: _.get(coin, 'uuid'),
+          buyQuantity: 0,
+          sellQuantity: 0,
+          price: 100,
+          isExpensive: false,
+          isCheap: false
+        });
+      }
     }
+  }
+
+  static isCheap(coin, chance = 5) {
+    return _.get(coin, 'cheap') && (GameExchange.getRandomInteger(0, 100) < chance);
+  }
   
-    static isExpensive(coin, chance = 5) {
-      return _.get(coin, 'expensive') && (GameExchange.getRandomInteger(0, 100) < chance);
-    }
+  static isExpensive(coin, chance = 5) {
+    return _.get(coin, 'expensive') && (GameExchange.getRandomInteger(0, 100) < chance);
+  }
 
   static getCoinPrice(coin) {
     let isCheap = false;

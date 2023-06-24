@@ -25,6 +25,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
     return res.json({ game });
 
   } catch (error) {
+    console.log(error);
     return next(createError(500, error.message));
   }
 });
