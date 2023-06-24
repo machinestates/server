@@ -39,6 +39,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use((err, req, res, next) => {
   console.log('An error has occurred:', err.message);
+  console.log(err.stack);
 
   res.status(err.status || 500);
   return res.json({ message: err.message });

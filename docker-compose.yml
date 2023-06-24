@@ -1,5 +1,13 @@
-version: '3.3'
+version: '3.8'
 services:
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
   db:
     image: mysql:5.7
     platform: linux/x86_64
@@ -24,3 +32,5 @@ services:
 # Names our volume
 volumes:
   my-db:
+  cache:
+    driver: local
