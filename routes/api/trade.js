@@ -3,11 +3,15 @@ const router = express.Router();
 const createError = require('http-errors');
 const passport = require('passport');
 const _ = require('lodash');
+const moment = require('moment');
 
 const User = require('../../shared/user');
 const Game = require('../../shared/game');
 const GameExchange = require('../../dtos/game-exchange');
 const Redis = require('../../shared/redis');
+const { Op } = require('sequelize');
+
+const TradingGameRound = require('../../models').TradingGameRound;
 
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   const userId = req.user.id;
@@ -64,31 +68,28 @@ router.put('/:uuid', passport.authenticate('jwt', { session: false }), async (re
  */
 router.get('/scores', async (req, res, next) => {
   try {
+    const today = await TradingGameRound.findAll({
+      limit: 25,
+      order: [['score', 'DESC']],
+      where: {
+        createdAt: {
+          [Op.gte]: moment().startOf('day'),
+          [Op.lte]: moment().endOf('day')
+        }
+      }
+    });
+    const alltime = await TradingGameRound.findAll({
+      limit: 25,
+      order: [['score', 'DESC']],
+    });
     const scores = {
-      today: generateScores('ease').sort((a, b) => b.score - a.score),
-      alltime: generateScores('scoe').sort((a, b) => b.score - a.score)
+      today,
+      alltime
     }
     return res.json({ scores });
   } catch (error) {
     return next(createError(500, error.message));
   }
 });
-
-function generateScores(handle) {
-  const scores = [];
-  for (let i = 0; i < 25; i++) {
-    scores.push({
-      handle: handle,
-      score: generateRandomScore(),
-      avatar: '',
-      top: true
-    });
-  }
-  return scores;
-}
-
-function generateRandomScore() {
-  return Math.floor(Math.random() * 1000000);
-}
 
 module.exports = router;

@@ -6,6 +6,8 @@ const coins = require('../data/game').coins;
 const GameExchange = require('./game-exchange');
 const GameInventory = require('./game-inventory');
 
+const TradingGameRound = require('../models').TradingGameRound;
+
 class Game {
   constructor(handle) {
     this.uuid = v4();
@@ -58,6 +60,11 @@ class Game {
       const amount = _.get(body, 'amount');
       return Game.borrow(game, amount);
     }
+
+    // Complete Game:
+    if (action === 'complete') {
+      return Game.completeGame(game);
+    }
   }
 
   static async travel(game, name) {
@@ -85,9 +92,8 @@ class Game {
 
     // If out of days, complete game:
     if (game.day > game.lastDay) {
-      // return await TradingGame.completeGame(game);
+      return await Game.completeGame(game);
     } else {
-      console.log(game.inventory);
       return game;
     }
   }
@@ -182,6 +188,30 @@ class Game {
     game.inventory.fiatcoin += amount;
 
     return game;
+  }
+
+  static async completeGame(game) {
+    const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
+
+    // Save to database:
+    const handle = _.get(game, 'handle');
+    const entry = {
+      uuid: _.get(game, 'uuid'),
+      handle,
+      profileImage: null,
+      score,
+      lastDay: _.get(game, 'lastDay')
+    }
+    await TradingGameRound.create(entry);
+    
+    // Return information:
+    return {
+      uuid: _.get(game, 'uuid'),
+      completed: true,
+      score: score,
+      coins: _.get(game, 'inventory.coins'),
+      lastDay: _.get(game, 'lastDay')
+    }
   }
 
 
