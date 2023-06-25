@@ -40,6 +40,56 @@ class Game {
       const quantity = _.get(body, 'quantity');
       return Game.buy(game, name, quantity);
     }
+
+    // Travel:
+    if (action === 'travel') {
+      const name = _.get(body, 'exchange');
+      return await Game.travel(game, name);
+    }
+
+    // Pay Debt:
+    if (action === 'pay') {
+      const amount = _.get(body, 'amount');
+      return Game.payDebt(game, amount);
+    }
+
+    // Borrow
+    if (action === 'borrow') {
+      const amount = _.get(body, 'amount');
+      return Game.borrow(game, amount);
+    }
+  }
+
+  static async travel(game, name) {
+    const exchange = _.find(exchanges, { name });
+    if (!exchange) return new Error('Cannot move to specified exchange.');
+
+    // Generate exchange:
+    game.exchange = new GameExchange(exchange, coins, game.inventory.fiatcoin, game.ghosted);
+
+    // Calculate loss from danger:
+    game.inventory.fiatcoin -= game.exchange.lossFromDanger;
+    if (game.exchange.lossFromDanger > 0) {
+      // Adds information about Deck Jack hacker:
+      // game.exchange.hacker = await DeckJack.useActive(game);
+    }
+
+    // Add day to game:
+    game.day++;
+
+    // Add daily interest to debt:
+    if (game.inventory.debt) {
+      game.inventory.debt *= 1.1; // 10% daily interest
+      game.inventory.debt = Math.round(game.inventory.debt);
+    }
+
+    // If out of days, complete game:
+    if (game.day > game.lastDay) {
+      // return await TradingGame.completeGame(game);
+    } else {
+      console.log(game.inventory);
+      return game;
+    }
   }
 
   static canBuy(game, name, quantity) {
@@ -109,6 +159,29 @@ class Game {
     } else {
       throw new Error('Cannot sell quantity of specified coin.');
     }
+  }
+
+  static payDebt(game, amount) {
+    const fiatcoin = _.get(game, 'inventory.fiatcoin');
+    if (fiatcoin < amount) throw new Error('Not enough FIATCOIN to pay debt amount.');
+
+    game.inventory.fiatcoin -= amount;
+    game.inventory.debt = Math.max((game.inventory.debt - amount), 0);
+
+    return game;
+  }
+
+  static borrow(game, amount) {
+    const debt = _.get(game, 'inventory.debt');
+    if (debt > 20000) throw new Error('Max debt has been reached.');
+
+    // Add amount to debt:
+    game.inventory.debt += amount;
+
+    // Add amount to fiatcoin:
+    game.inventory.fiatcoin += amount;
+
+    return game;
   }
 
 

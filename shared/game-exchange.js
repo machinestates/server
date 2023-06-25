@@ -9,9 +9,11 @@ class GameExchange {
     this.squareImage = exchange.squareImage;
     this.description = exchange.description;
     this.hasLoan = exchange.hasLoan;
+    this.fiatcoin = fiatcoin;
     this.hasStore = exchange.hasStore;
     this.hasDanger = GameExchange.getDanger(exchange.danger, ghosted);
     this.coins = GameExchange.getCoinPrices(exchange, coins);
+    this.lossFromDanger = GameExchange.getLossFromDanger(this.hasDanger, fiatcoin);
     this.ensureCacheAtTentCity(coins);
   }
 
@@ -120,6 +122,10 @@ class GameExchange {
     }
 
     return _.shuffle(availableCoins);
+  }
+
+  static getLossFromDanger(hasDanger, fiatcoin) {
+    return (hasDanger && fiatcoin > 1000) ? Math.round((fiatcoin * .1)) : 0;
   }
 }
 
