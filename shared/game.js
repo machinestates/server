@@ -133,7 +133,7 @@ class Game {
         });
 
         // Log:
-        game.inventory.log.push(`Day ${game.day}: Bought ${quantity} ${name} at $${coin.price} for a total of $${coin.price * quantity} FIATCOIN`);
+        game.inventory.log.push(`Day ${game.day}: Bought ${quantity} ${name} at $${coin.price} for a total of $${coin.price * quantity}`);
 
       } else {
         game.inventory.coins[item].amount += quantity;
@@ -171,7 +171,7 @@ class Game {
       }
 
       // Add to log:
-      game.inventory.log.push(`Day ${game.day}: Sold ${quantity} ${name} at $${price} for a total of $${price * quantity} FIATCOIN`);
+      game.inventory.log.push(`Day ${game.day}: Sold ${quantity} ${name} at $${price} for a total of $${price * quantity}`);
 
       return game;
     } else {
