@@ -4,6 +4,7 @@ class GameInventory {
     this.fiatcoin = 0;
     this.coinsCapacity = 100;
     this.itemsCapacity = 3;
+    this.log = [];
     this.getInitialInventory(handle);
   }
 

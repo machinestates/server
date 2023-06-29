@@ -23,6 +23,7 @@
       "image": "https://megacity-assets.s3.amazonaws.com/exchange-plasmanet-600.png",
       "danger": 25,
       "minCoins": 5,
+      "maxCoins": 7,
       "hasLoan": true,
       "hasStore": false
     },

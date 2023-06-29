@@ -90,6 +90,9 @@ class Game {
       game.inventory.debt = Math.round(game.inventory.debt);
     }
 
+    // Add to log:
+    game.inventory.log.push(`Day ${game.day}: Arrived at ${exchange.name}`);
+
     // If out of days, complete game:
     if (game.day > game.lastDay) {
       return await Game.completeGame(game);
@@ -128,6 +131,10 @@ class Game {
           squareImage: _.get(coin, 'squareImage') || '',
           description: _.get(coin, 'description') || ''
         });
+
+        // Log:
+        game.inventory.log.push(`Day ${game.day}: Bought ${quantity} ${name} at $${coin.price} for a total of $${coin.price * quantity} FIATCOIN`);
+
       } else {
         game.inventory.coins[item].amount += quantity;
       }
@@ -155,12 +162,17 @@ class Game {
     if (Game.canSell(game, name, quantity)) {
       const result = _.findIndex(game.inventory.coins, { name });
 
-      game.inventory.fiatcoin += _.find(game.exchange.coins, { name }).price * quantity;
+      const price = _.find(game.exchange.coins, { name }).price;
+      game.inventory.fiatcoin += price * quantity;
       game.inventory.coins[result].amount -= quantity;
 
       if (!game.inventory.coins[result].amount) {
         game.inventory.coins.splice(result, 1);
       }
+
+      // Add to log:
+      game.inventory.log.push(`Day ${game.day}: Sold ${quantity} ${name} at $${price} for a total of $${price * quantity} FIATCOIN`);
+
       return game;
     } else {
       throw new Error('Cannot sell quantity of specified coin.');
@@ -174,6 +186,9 @@ class Game {
     game.inventory.fiatcoin -= amount;
     game.inventory.debt = Math.max((game.inventory.debt - amount), 0);
 
+    // Log
+    game.inventory.log.push(`Day ${game.day}: Paid ${amount} FIATCOIN towards debt.`);
+
     return game;
   }
 
@@ -186,6 +201,9 @@ class Game {
 
     // Add amount to fiatcoin:
     game.inventory.fiatcoin += amount;
+
+    // Log
+    game.inventory.log.push(`Day ${game.day}: Borrowed ${amount} FIATCOIN`);
 
     return game;
   }
