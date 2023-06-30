@@ -1,4 +1,7 @@
 'use strict';
+
+const { v4 } = require('uuid');
+
 const {
   Model
 } = require('sequelize');
@@ -14,6 +17,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId'
       });
     }
+
+    static generate = (item) => {
+      delete item.id;
+      delete item.createdAt;
+      item.itemUuid = item.uuid;
+      item.uuid = v4();
+      item.used = false;
+      item.equipped = false;
+      return item;
+    };
   }
   UserItem.init({
     uuid: DataTypes.UUID,
@@ -25,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     imageSource: DataTypes.STRING,
-    used: DataTypes.BOOLEAN
+    used: DataTypes.BOOLEAN,
+    equipped: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'UserItem',

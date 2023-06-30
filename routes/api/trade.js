@@ -22,7 +22,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
     const game = new Game(user.username);
     game.exchanges = _.map(game.exchanges, exchange => { return new GameExchange(exchange) });
     
-    // TODO: Get initial inventory:
+    // Get initial inventory:
+    game.inventory.items = await Game.getInitialInventory(userId);
 
     // Set initial game state:
     await Redis.setGameState(game.uuid, JSON.stringify([game]));

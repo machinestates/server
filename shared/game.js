@@ -5,7 +5,9 @@ const exchanges = require('../data/game').exchanges;
 const coins = require('../data/game').coins;
 const GameExchange = require('./game-exchange');
 const GameInventory = require('./game-inventory');
+const GameItem = require('./game-item');
 
+const UserItem = require('../models').UserItem;
 const TradingGameRound = require('../models').TradingGameRound;
 
 class Game {
@@ -65,6 +67,17 @@ class Game {
     if (action === 'complete') {
       return Game.completeGame(game);
     }
+
+    // Use Item:
+    if (action === 'useItem') {
+      const name = _.get(body, 'name');
+      const uuid = _.get(body, 'uuid');
+      if (!uuid) throw new Error('No UUID provided.');
+      return await GameItem.useItem(game, name, uuid);
+    }
+
+    // No action found:
+    throw new Error('Invalid action provided.');
   }
 
   static async travel(game, name) {
@@ -187,7 +200,7 @@ class Game {
     game.inventory.debt = Math.max((game.inventory.debt - amount), 0);
 
     // Log
-    game.inventory.log.push(`Day ${game.day}: Paid ${amount} FIATCOIN towards debt.`);
+    game.inventory.log.push(`Day ${game.day}: Paid $${amount} towards debt.`);
 
     return game;
   }
@@ -203,7 +216,7 @@ class Game {
     game.inventory.fiatcoin += amount;
 
     // Log
-    game.inventory.log.push(`Day ${game.day}: Borrowed ${amount} FIATCOIN`);
+    game.inventory.log.push(`Day ${game.day}: Borrowed $${amount}`);
 
     return game;
   }
@@ -230,6 +243,19 @@ class Game {
       coins: _.get(game, 'inventory.coins'),
       lastDay: _.get(game, 'lastDay')
     }
+  }
+
+  static async getInitialInventory(userId) {
+    if (!userId) throw new Error('User ID is not found.');
+
+    return await UserItem.findAll({
+      attributes: ['id', 'uuid', 'itemUuid', 'createdAt', 'used', 'equipped', 'name', 'description'],
+      order: [
+        ['id', 'DESC']
+      ],
+      raw: true,
+      where: { userId, used: false, equipped: true }
+    });
   }
 
 

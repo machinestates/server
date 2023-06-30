@@ -34,6 +34,9 @@ module.exports = {
       used: {
         type: Sequelize.BOOLEAN
       },
+      equipped: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
