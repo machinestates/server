@@ -39,7 +39,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     imageSource: DataTypes.STRING,
     used: DataTypes.BOOLEAN,
-    equipped: DataTypes.BOOLEAN
+    equipped: DataTypes.BOOLEAN,
+    equippable: DataTypes.BOOLEAN,
+    rarity: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'UserItem',

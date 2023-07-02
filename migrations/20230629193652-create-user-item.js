@@ -37,6 +37,12 @@ module.exports = {
       equipped: {
         type: Sequelize.BOOLEAN
       },
+      equippable: {
+        type: Sequelize.BOOLEAN
+      },
+      rarity: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

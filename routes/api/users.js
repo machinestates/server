@@ -6,6 +6,7 @@ const passport = require('passport');
 const User = require('../../shared/user');
 const JWT = require('../../shared/jwt');
 const Password = require('../../shared/password');
+const UserItem = require('../../shared/user-item');
 
 /**
  * @route POST api/users
@@ -96,6 +97,50 @@ router.get('/me', passport.authenticate('jwt', { session: false }), async (req, 
         token: req.headers.authorization.replace('Bearer ', ''),
       }
     });
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
+
+/**
+ * @route GET /api/users/me/items
+ * @author Ease <ease@machinestates.com>
+ */
+router.get('/me/items', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) return next(createError(401));
+
+  try {
+    const items = await UserItem.getItems(userId);
+    return res.json({ items });
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
+
+/**
+ * @route GET /api/users/me/items/:uuid
+ * @author Ease <ease@machinestates.com>
+ */
+router.put('/me/items/:uuid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) return next(createError(401));
+
+  const uuid = req.params.uuid;
+  if (!uuid) return next(createError(400, 'UUID is not set'));
+  
+  const { equipped } = req.body;
+
+  try {
+
+    // Find, update and save item:
+    const item = await UserItem.getByUuid(uuid, userId);
+    item.equipped = equipped;
+    await item.save();
+
+    // Return all items:
+    const items = await UserItem.getItems(userId);
+    return res.json({ items });
   } catch (error) {
     return next(createError(500, error.message));
   }

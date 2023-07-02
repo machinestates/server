@@ -138,6 +138,26 @@ describe('POST /api/users/me', () => {
         .set('Accept', 'application/json')
         .send({ user })
     expect(response.status).toBe(404);
+  });
 });
 
+describe('GET /api/users/me/items', () => {  
+
+  beforeEach(async () => {
+    const user = { emailusername: 'erik@erikaugust.com', password: process.env.ENTRY_PASSWORD };
+    const response = await request.post('/api/users/me')
+        .set('Accept', 'application/json')
+        .send({ user })
+    token = response.body.user.token;
+  });
+
+  test('should return 200 success when valid token is passed', async () => {
+    
+    const response = await request.get(`/api/users/me/items`)
+    .set('Authorization', 'Bearer ' + token)
+    .set('Accept', 'application/json');
+    
+    expect(response.status).toBe(200);
+    expect(response.body.items).toBeTruthy();
+  });
 });
