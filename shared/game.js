@@ -93,6 +93,7 @@ class Game {
     if (game.exchange.lossFromDanger > 0) {
       // Adds information about Deck Jack hacker:
       // game.exchange.hacker = await DeckJack.useActive(game);
+      game.inventory.log.push(`Day ${game.day}: HACKED! Lost $${game.exchange.lossFromDanger}`);
     }
 
     // Add day to game:
@@ -201,7 +202,7 @@ class Game {
     game.inventory.debt = Math.max((game.inventory.debt - amount), 0);
 
     // Log
-    game.inventory.log.push(`Day ${game.day}: Paid $${amount} towards debt.`);
+    game.inventory.log.push(`Day ${game.day}: Paid $${amount} towards debt`);
 
     return game;
   }
@@ -239,6 +240,9 @@ class Game {
   static async completeGame(game) {
     const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
     const user = await User.findOne({ username: _.get(game, 'handle') });
+
+    // Add to log:
+    game.inventory.log.push(`Round completed: Final score is $${score}`);
 
     // Log:
     console.log(game.inventory.log.join('\n'));
