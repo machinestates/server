@@ -6,7 +6,8 @@ const coins = require('../data/game').coins;
 const GameExchange = require('./game-exchange');
 const GameInventory = require('./game-inventory');
 const GameItem = require('./game-item');
-
+const Coin = require('./coin');
+const User = require('../models').User;
 const UserItem = require('../models').UserItem;
 const TradingGameRound = require('../models').TradingGameRound;
 
@@ -221,8 +222,26 @@ class Game {
     return game;
   }
 
+  /**
+   * 
+   * @param {} game 
+   * @returns {boolean} Whether or not the player can mint coins. 
+   */
+  static canMint(game) {
+    const score = _.get(game, 'inventory.fiatcoin');
+    const coins = _.get(game, 'inventory.coins').length;
+    const debt = _.get(game, 'inventory.debt');
+
+    // If score is over $100,000, there is no debt, and the player holds coins:
+    return !!(score >= 100000 && debt <= 0 && coins);
+  }
+
   static async completeGame(game) {
     const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
+    const user = await User.findOne({ username: _.get(game, 'handle') });
+
+    // Log:
+    console.log(game.inventory.log.join('\n'));
 
     // Save to database:
     const handle = _.get(game, 'handle');
@@ -233,7 +252,14 @@ class Game {
       score,
       lastDay: _.get(game, 'lastDay')
     }
-    await TradingGameRound.create(entry);
+    console.log(entry);
+    const round = await TradingGameRound.create(entry);
+
+    // Check mint status:
+    if (Game.canMint(game)) {
+      const coins = _.get(game, 'inventory.coins');
+      const minted = await Coin.mint(round, user, coins);
+    }
     
     // Return information:
     return {

@@ -74,8 +74,7 @@ router.get('/scores', async (req, res, next) => {
       order: [['score', 'DESC']],
       where: {
         createdAt: {
-          [Op.gte]: moment().startOf('day'),
-          [Op.lte]: moment().endOf('day')
+          [Op.gte]: new Date().setHours(0,0,0,0)
         }
       }
     });

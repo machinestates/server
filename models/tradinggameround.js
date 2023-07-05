@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models['TradingGameRound'].hasMany(models['TradingGameRoundCoin'], { as: 'coins', foreignKey: 'roundId' });
+
     }
   }
   TradingGameRound.init({
@@ -18,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     handle: DataTypes.STRING,
     profileImage: DataTypes.STRING,
     score: DataTypes.INTEGER,
-    coins: DataTypes.INTEGER,
     lastDay: DataTypes.INTEGER
   }, {
     sequelize,

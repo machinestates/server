@@ -7,6 +7,7 @@ const User = require('../../shared/user');
 const JWT = require('../../shared/jwt');
 const Password = require('../../shared/password');
 const UserItem = require('../../shared/user-item');
+const UserCoin = require('../../shared/user-coin');
 
 /**
  * @route POST api/users
@@ -113,6 +114,22 @@ router.get('/me/items', passport.authenticate('jwt', { session: false }), async 
   try {
     const items = await UserItem.getItems(userId);
     return res.json({ items });
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
+
+/**
+ * @route GET /api/users/me/coins
+ * @author Ease <ease@machinestates.com>
+ */
+router.get('/me/coins', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) return next(createError(401));
+
+  try {
+    const coins = await UserCoin.getCoins(userId);
+    return res.json({ coins });
   } catch (error) {
     return next(createError(500, error.message));
   }

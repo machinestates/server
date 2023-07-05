@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TradingGameRounds', {
+    await queryInterface.createTable('UserCoins', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,16 +12,25 @@ module.exports = {
       uuid: {
         type: Sequelize.UUID
       },
-      handle: {
-        type: Sequelize.STRING
+      coinUuid: {
+        type: Sequelize.UUID
       },
-      profileImage: {
-        type: Sequelize.STRING
-      },
-      score: {
+      userId: {
         type: Sequelize.INTEGER
       },
-      lastDay: {
+      name: {
+        type: Sequelize.STRING
+      },
+      image: {
+        type: Sequelize.STRING
+      },
+      iconImage: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      amount: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -35,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TradingGameRounds');
+    await queryInterface.dropTable('UserCoins');
   }
 };

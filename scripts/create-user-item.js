@@ -9,6 +9,16 @@ if (!id) throw new Error('No Item ID specified.');
 const username = process.argv[3].toLowerCase();
 if (!username) throw new Error('No username specified.');
 
+/**
+ * 1: HARDWARE WALLET
+ * 2: GHOST JACKET
+ * 3: DECK JACK
+ * 4: EXTENDED TRIP
+ * 5: CYBERDIESEL
+ * 6: BAG OF FIAT
+ */
+
+
 void async function() {
   try {
     const item = await Item.findOne({ raw: true, where: { id: id } });
