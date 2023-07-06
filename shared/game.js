@@ -239,7 +239,7 @@ class Game {
 
   static async completeGame(game) {
     const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
-    const user = await User.findOne({ username: _.get(game, 'handle') });
+    const user = await User.findOne({ where: { username: _.get(game, 'handle') } });
 
     // Add to log:
     game.inventory.log.push(`Round completed: Final score is $${score}`);
@@ -259,10 +259,12 @@ class Game {
     console.log(entry);
     const round = await TradingGameRound.create(entry);
 
+    let minted = null;
+
     // Check mint status:
     if (Game.canMint(game)) {
       const coins = _.get(game, 'inventory.coins');
-      const minted = await Coin.mint(round, user, coins);
+      minted = await Coin.mint(round, user, coins);
     }
     
     // Return information:
@@ -270,6 +272,7 @@ class Game {
       uuid: _.get(game, 'uuid'),
       completed: true,
       score: score,
+      minted: minted ? true : false,
       coins: _.get(game, 'inventory.coins'),
       lastDay: _.get(game, 'lastDay')
     }
