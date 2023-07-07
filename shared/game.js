@@ -10,6 +10,7 @@ const Coin = require('./coin');
 const User = require('../models').User;
 const UserItem = require('../models').UserItem;
 const TradingGameRound = require('../models').TradingGameRound;
+const { createStory } = require('./openai');
 
 class Game {
   constructor(handle) {
@@ -270,13 +271,17 @@ class Game {
 
     // Log:
     console.log(game.inventory.log.join('\n'));
-    
+
+    // Create story from log:
+    const story = await createStory(game.handle, game.inventory.log);
+
     // Return information:
     return {
       uuid: _.get(game, 'uuid'),
       completed: true,
       score: score,
       minted: minted ? true : false,
+      story,
       coins: _.get(game, 'inventory.coins'),
       lastDay: _.get(game, 'lastDay')
     }
