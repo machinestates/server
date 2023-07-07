@@ -11,11 +11,11 @@ const openai = new OpenAIApi(configuration);
 /**
  * 
  * @param {string} handle 
- * @param {string[]} log 
+ * @param {string[]} log
  * @returns 
  */
 async function createStory(handle, log) {
-  const prompt = `Based off the trading log below, create a story for the character ${handle.toUpperCase()}:\n${log.join('\n')}`;
+  const prompt = `In 150 words or less, based off the trading log below, create a story for the character ${handle.toUpperCase()}: \n${log.join('\n')}`;
 
   const messages = [];
   messages.push({ role: 'user', content: prompt });

@@ -42,7 +42,9 @@ Round completed: Final score is $105937
 Minted 5 1337!
 `;
 
-const prompt = `Based off the trading log below, create a story for the character Ease: ${log}`;
+const handle = 'ease';
+const prompt = `In 150 words or less, based off the trading log below, create a story for the character ${handle.toUpperCase()}: \n${log}`;
+
 
 const messages = [];
 messages.push({ role: 'user', content: prompt });
