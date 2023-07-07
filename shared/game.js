@@ -244,9 +244,6 @@ class Game {
     // Add to log:
     game.inventory.log.push(`Round completed: Final score is $${score}`);
 
-    // Log:
-    console.log(game.inventory.log.join('\n'));
-
     // Save to database:
     const handle = _.get(game, 'handle');
     const entry = {
@@ -265,7 +262,14 @@ class Game {
     if (Game.canMint(game)) {
       const coins = _.get(game, 'inventory.coins');
       minted = await Coin.mint(round, user, coins);
+
+      _.each(coins, (coin) => {
+        game.inventory.log.push(`Minted ${coin.amount} ${coin.name}!`);
+      });
     }
+
+    // Log:
+    console.log(game.inventory.log.join('\n'));
     
     // Return information:
     return {
