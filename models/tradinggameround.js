@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     handle: DataTypes.STRING,
     profileImage: DataTypes.STRING,
     score: DataTypes.INTEGER,
-    lastDay: DataTypes.INTEGER
+    lastDay: DataTypes.INTEGER,
+    story: DataTypes.TEXT,
+    storyImage: DataTypes.STRING,
+    storyAudio: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'TradingGameRound',

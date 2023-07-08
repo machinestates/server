@@ -24,6 +24,15 @@ module.exports = {
       lastDay: {
         type: Sequelize.INTEGER
       },
+      story: {
+        type: Sequelize.TEXT
+      },
+      storyImage: {
+        type: Sequelize.STRING
+      },
+      storyAudio: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
