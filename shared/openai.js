@@ -25,9 +25,7 @@ async function createStory(handle, log) {
     messages
   });
 
-  const content = completion.data.choices[0].message.content;
-  console.log(content);
-  return content.replace(/(\r\n|\r|\n)/g, '<br>');
+  return completion.data.choices[0].message.content;
 }
 
 module.exports = {

@@ -1,6 +1,14 @@
+require('dotenv').config();
+
 const { PollyClient, StartSpeechSynthesisTaskCommand } = require( '@aws-sdk/client-polly');
 const REGION = 'us-east-1';
-const polly = new PollyClient({ region: REGION });
+const polly = new PollyClient({ 
+  region: REGION,
+  credentials: {
+    accessKeyId: process.env.POLLY_ACCESS_KEY,
+    secretAccessKey: process.env.POLLY_SECRET_KEY
+  }
+ });
 
 /**
  * 

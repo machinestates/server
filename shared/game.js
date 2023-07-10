@@ -11,6 +11,7 @@ const User = require('../models').User;
 const UserItem = require('../models').UserItem;
 const TradingGameRound = require('../models').TradingGameRound;
 const { createStory } = require('./openai');
+const { createSpeechFromText } = require('./polly');
 
 class Game {
   constructor(handle) {
@@ -254,7 +255,6 @@ class Game {
       score,
       lastDay: _.get(game, 'lastDay')
     }
-    console.log(entry);
     const round = await TradingGameRound.create(entry);
 
     let minted = null;
@@ -275,13 +275,21 @@ class Game {
     // Create story from log:
     const story = await createStory(game.handle, game.inventory.log);
 
+    // Create audio from story:
+    const audio = await createSpeechFromText(story);
+
+    round.story = story;
+    round.storyAudio = audio;
+    await round.save();
+
     // Return information:
     return {
       uuid: _.get(game, 'uuid'),
       completed: true,
       score: score,
       minted: minted ? true : false,
-      story,
+      story: story.replace(/(\r\n|\r|\n)/g, '<br>'),
+      storyAudio: audio,
       coins: _.get(game, 'inventory.coins'),
       lastDay: _.get(game, 'lastDay')
     }

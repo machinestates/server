@@ -1,8 +1,6 @@
-const { PollyClient, StartSpeechSynthesisTaskCommand } = require( '@aws-sdk/client-polly');
-const REGION = 'us-east-1';
+const { createSpeechFromText } = require('../shared/polly');
 
 void async function() {
-  const polly = new PollyClient({ region: REGION });
   const text = `
 EASE was a skilled trader navigating the volatile world of cryptocurrency. On the first day, EASE sold 50 CACHE, making a profit of $4550. Eager to explore new opportunities, EASE arrived at the virtual world of VYPR.
 
@@ -32,9 +30,8 @@ Completing the round with a final score of $52605, EASE had successfully navigat
   };
 
   try {
-    const response = await polly.send(new StartSpeechSynthesisTaskCommand(params));
-    console.log(response.SynthesisTask.OutputUri);
-    console.log("Success, audio file added to " + params.OutputS3BucketName);
+    const response = await createSpeechFromText(text);
+    console.log(response);
   } catch (err) {
     console.log("Error putting object", err);
   }
