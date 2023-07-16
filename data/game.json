@@ -216,6 +216,19 @@
         "minimumPrice": 60,
         "maximumPrice": 220
       }
+    },
+    {
+      "name": "M-SYNCHRO",
+      "uuid": "00ceb9bb-ceb2-4b66-82c1-949239cc8f36",
+      "image": "https://machinestates.s3.amazonaws.com/m-synchro-512.png",
+      "iconImage": "https://machinestates.s3.amazonaws.com/m-synchro-512.png",
+      "color": "#926734",
+      "minimumPrice": 25,
+      "maximumPrice": 300,
+      "cheap": {
+        "minimumPrice": 1,
+        "maximumPrice": 10
+      }
     }
   ]
 }

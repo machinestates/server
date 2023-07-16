@@ -92,7 +92,8 @@ class GameExchange {
           sellQuantity: 0,
           price: _.get(price, 'price'),
           isExpensive: _.get(price, 'isExpensive'),
-          isCheap: _.get(price, 'isCheap')
+          isCheap: _.get(price, 'isCheap'),
+          color: _.get(coin, 'color')
         });
       }
     });
