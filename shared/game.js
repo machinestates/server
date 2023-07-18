@@ -12,9 +12,10 @@ const UserItem = require('../models').UserItem;
 const TradingGameRound = require('../models').TradingGameRound;
 const { createStory } = require('./openai');
 const { createSpeechFromText } = require('./polly');
+const Solana = require('./solana');
 
 class Game {
-  constructor(handle) {
+  constructor(handle, publicKey = '') {
     this.uuid = v4();
     this.handle = handle.toLowerCase();
     this.complete = false;
@@ -25,6 +26,7 @@ class Game {
     this.inventory = new GameInventory(this.handle);
     this.itemsUsed = [];
     this.ghosted = false;
+    this.publicKey = publicKey;
   }
 
   getInitialExchange() {
@@ -242,11 +244,34 @@ class Game {
   static async completeGame(game) {
     const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
     const user = await User.findOne({ where: { username: _.get(game, 'handle') } });
+    let inventoryCoins = _.get(game, 'inventory.coins');
 
     // Add to log:
     game.inventory.log.push(`Round completed: Final score is $${score}`);
 
-    // Save to database:
+    // Add minted coins to the log:
+    _.each(inventoryCoins, (coin) => {
+      game.inventory.log.push(`Minted ${coin.amount} ${coin.name}!`);
+    });
+
+    // Try to create a new story first - if fails, user can re-try:
+    // Create story from log:
+    const story = await createStory(game.handle, game.inventory.log);
+    // Create audio from story:
+    const audio = await createSpeechFromText(story);
+
+    // Transfer the Solana tokens, first, if applicable:
+    if (Game.canMint(game)) {
+      for await (const coin of inventoryCoins) {
+        if (coin.name.toUpperCase() === 'M-SYNCHRO' && game.publicKey) {
+          console.log(`Transferring ${coin.amount} ${coin.name} tokens to: ${game.publicKey}`);
+          const transaction = await Solana.transferTokens(game.publicKey, coin.name, coin.amount);
+          coin.transaction = transaction;
+        }
+      };
+    }
+
+    // Save round database:
     const handle = _.get(game, 'handle');
     const entry = {
       uuid: _.get(game, 'uuid'),
@@ -259,25 +284,15 @@ class Game {
 
     let minted = null;
 
-    // Check mint status:
+    // Check mint status - if so, mint coins to database:
     if (Game.canMint(game)) {
-      const coins = _.get(game, 'inventory.coins');
-      minted = await Coin.mint(round, user, coins);
-
-      _.each(coins, (coin) => {
-        game.inventory.log.push(`Minted ${coin.amount} ${coin.name}!`);
-      });
+      minted = await Coin.mint(round, user, inventoryCoins);
     }
 
     // Log:
     console.log(game.inventory.log.join('\n'));
 
-    // Create story from log:
-    const story = await createStory(game.handle, game.inventory.log);
-
-    // Create audio from story:
-    const audio = await createSpeechFromText(story);
-
+    // Save the story information to database:
     round.story = story;
     round.storyAudio = audio;
     await round.save();
@@ -290,7 +305,7 @@ class Game {
       minted: minted ? true : false,
       story: story.replace(/(\r\n|\r|\n)/g, '<br>'),
       storyAudio: audio,
-      coins: _.get(game, 'inventory.coins'),
+      coins: inventoryCoins,
       lastDay: _.get(game, 'lastDay')
     }
   }

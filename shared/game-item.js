@@ -46,6 +46,7 @@ class GameItem {
       await item.save();
 
       game.inventory.items = await GameItem.getItems(game);
+      game.inventory.log.push(`Day ${game.day}: Used a BAG OF FIAT to add $50,000 to FIATCOIN`);
 
       // Return state:
       return game;
@@ -70,6 +71,7 @@ class GameItem {
       await item.save();
 
       game.inventory.items = await GameItem.getItems(game);
+      game.inventory.log.push(`Day ${game.day}: Used GHOST JACKET to become invisible to the hackers`);
 
       // Return state:
       return game;

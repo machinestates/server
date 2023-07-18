@@ -16,7 +16,8 @@ class GameInventory {
     this.coins = [
       {
         name: 'CACHE',
-        amount: 50
+        amount: 50,
+        uuid: 'c50e6f9c-d8ad-4b81-93ac-db65b162a7f3'
       }
     ];
     this.items = [];
