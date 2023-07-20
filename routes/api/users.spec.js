@@ -181,3 +181,24 @@ describe('GET /api/users/me/coins', () => {
   });
   
 });
+
+describe('PUT /api/users/me/avatar', () => {
+  beforeEach(async () => {
+    const user = { emailusername: 'erik@erikaugust.com', password: process.env.ENTRY_PASSWORD };
+    const response = await request.post('/api/users/me')
+        .set('Accept', 'application/json')
+        .send({ user })
+    token = response.body.user.token;
+  });
+  test.only('should return 200 success when valid avatar image is passed', async () => {
+    const body = {
+      image: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+    };
+    const response = await request.put('/api/users/me/avatar')
+        .set('Authorization', 'Bearer ' + token)
+        .set('Accept', 'application/json')
+        .send(body)
+    expect(response.status).toBe(200);
+  });
+
+});

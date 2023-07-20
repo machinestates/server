@@ -8,6 +8,7 @@ const JWT = require('../../shared/jwt');
 const Password = require('../../shared/password');
 const UserItem = require('../../shared/user-item');
 const UserCoin = require('../../shared/user-coin');
+const Image = require('../../shared/image');
 
 /**
  * @route POST api/users
@@ -130,6 +131,27 @@ router.get('/me/coins', passport.authenticate('jwt', { session: false }), async 
   try {
     const coins = await UserCoin.getCoins(userId);
     return res.json({ coins });
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
+
+/**
+ * @route PUT /api/users/me/avatar
+ * @author Ease <ease@machinestates.com>
+ */
+router.put('/me/avatar', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) return next(createError(401));
+
+  const { image } = req.body;
+  if (!image) return next(createError(400, 'Image is not set'));
+
+  try {
+    const user = await User.getById(userId);
+    user.avatar = (await Image.uploadDataUrl(image)).secure_url;
+    await user.save();
+    return res.json({ avatar: user.avatar });
   } catch (error) {
     return next(createError(500, error.message));
   }

@@ -38,21 +38,23 @@ describe('Game', () => {
   describe('completeGame()', () => {
     test('should save a round, coins and user coins', async () => {
       const game = { 
+        publicKey: '8meApHo9bFT8xHuadiDbXgWyBgQqR7YS5oYRpLgevqoC',
         uuid: '1234',
         handle: 'ease',
         inventory: {
           fiatcoin: 250000,
-          coins: [ { name: 'CACHE', amount: 50, uuid: '1234' }],
-          debt: 0
+          coins: [ { name: 'CACHE', amount: 50, uuid: '1234' }, { name: 'M-SYNCHRO', amount: 50, uuid: '1234' }],
+          debt: 0,
+          log: []
         },
         lastDay: 15
       }
 
       const result = await Game.completeGame(game);
-      
+
       expect(result.completed).toBe(true);
       expect(result.uuid).toBe('1234');
-      expect(result.coins.length).toBe(1);
-    });
+      expect(result.coins.length).toBe(2);
+    }, 30000);
   });
 });

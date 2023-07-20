@@ -43,9 +43,6 @@ async function transferTokens(to, name, amount) {
     new PublicKey(to) // Public key of recipient
   );
 
-  console.log('Transferring...');
-  console.log('Transferring...');
-
   let signature = await transfer(
     connection,
     fromWallet,

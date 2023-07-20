@@ -250,9 +250,11 @@ class Game {
     game.inventory.log.push(`Round completed: Final score is $${score}`);
 
     // Add minted coins to the log:
-    _.each(inventoryCoins, (coin) => {
-      game.inventory.log.push(`Minted ${coin.amount} ${coin.name}!`);
-    });
+    if (Game.canMint(game)) {
+      _.each(inventoryCoins, (coin) => {
+        game.inventory.log.push(`Minted ${coin.amount} ${coin.name}!`);
+      });
+    }
 
     // Try to create a new story first - if fails, user can re-try:
     // Create story from log:
@@ -276,7 +278,7 @@ class Game {
     const entry = {
       uuid: _.get(game, 'uuid'),
       handle,
-      profileImage: null,
+      profileImage: user.avatar,
       score,
       lastDay: _.get(game, 'lastDay')
     }
