@@ -8,6 +8,7 @@ const JWT = require('../../shared/jwt');
 const Password = require('../../shared/password');
 const UserItem = require('../../shared/user-item');
 const UserCoin = require('../../shared/user-coin');
+const UserProfile = require('../../shared/user-profile');
 const Image = require('../../shared/image');
 
 /**
@@ -99,6 +100,18 @@ router.get('/me', passport.authenticate('jwt', { session: false }), async (req, 
         token: req.headers.authorization.replace('Bearer ', ''),
       }
     });
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+});
+
+router.get('/profiles/:handle', async (req, res, next) => {
+  const handle = req.params.handle;
+  if (!handle) return next(createError(400, 'Handle is not set'));
+
+  try {
+    const response = await UserProfile.getByHandle(handle);
+    return res.json({ profile: response });
   } catch (error) {
     return next(createError(500, error.message));
   }
