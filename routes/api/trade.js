@@ -18,10 +18,13 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
   if (!userId) return next(createError(401));
 
   const publicKey = req.body.publicKey;
+  const handle = req.body.handle;
+  const image = req.body.image;
 
   try {
-    const user = await User.getById(userId);
-    const game = new Game(user.username, publicKey);
+    const game = new Game(handle, image, publicKey);
+    console.log(handle);
+    console.log(image);
     game.exchanges = _.map(game.exchanges, exchange => { return new GameExchange(exchange) });
     
     // Get initial inventory:

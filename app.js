@@ -30,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/trade', require('./routes/api/trade'));
+app.use('/api/tokens', require('./routes/api/tokens'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

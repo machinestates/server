@@ -15,9 +15,10 @@ const { createSpeechFromText } = require('./polly');
 const Solana = require('./solana');
 
 class Game {
-  constructor(handle, publicKey = '') {
+  constructor(handle, image, publicKey = '') {
     this.uuid = v4();
     this.handle = handle.toLowerCase();
+    this.image = image;
     this.complete = false;
     this.day = 1;
     this.lastDay = 15;
@@ -243,7 +244,7 @@ class Game {
 
   static async completeGame(game) {
     const score = (_.get(game, 'inventory.fiatcoin') - _.get(game, 'inventory.debt'));
-    const user = await User.findOne({ where: { username: _.get(game, 'handle') } });
+    //const user = await User.findOne({ where: { username: _.get(game, 'handle') } });
     let inventoryCoins = _.get(game, 'inventory.coins');
 
     // Add to log:
@@ -278,7 +279,7 @@ class Game {
     const entry = {
       uuid: _.get(game, 'uuid'),
       handle,
-      profileImage: user.avatar,
+      profileImage: _.get(game, 'image'),
       score,
       lastDay: _.get(game, 'lastDay')
     }
@@ -287,9 +288,9 @@ class Game {
     let minted = null;
 
     // Check mint status - if so, mint coins to database:
-    if (Game.canMint(game)) {
+    /**if (Game.canMint(game)) {
       minted = await Coin.mint(round, user, inventoryCoins);
-    }
+    }**/
 
     // Log:
     console.log(game.inventory.log.join('\n'));

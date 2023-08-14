@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-polly": "^3.363.0",
+    "@metaplex-foundation/js": "^0.19.4",
     "@solana/spl-token": "^0.3.4",
     "@solana/web3.js": "1.56",
     "bcrypt": "^5.1.0",
