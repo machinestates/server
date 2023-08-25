@@ -1,16 +1,24 @@
+const path = require('path');
+require('dotenv').config();
+
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+const createError = require('http-errors');
 
 const { Connection, clusterApiUrl } = require('@solana/web3.js');
 const { getTokenAccounts, parseTokenAccounts, getMetadata } = require('../../shared/solana');
 
-router.get('/', async (request, response, next) => {
+const User = require('../../shared/user');
+const { createUserNft, verifyUserNft } = require ('../../shared/nft');
+
+
+router.get('/', passport.authenticate('jwt', { session: false }), async (request, response, next) => {
   const wallet = request.query.wallet;
-  //const wallet = '5UztTwQ3iTqqgH2gx3nBviphT1j2W3cuHLQvwwMYJK2y';
   const type = request.query.type;
 
   try {
-    const connection = new Connection('https://purple-long-bush.solana-mainnet.discover.quiknode.pro/6c3b92f7c3226c932ba8d0d208a1651caa764af0/');
+    const connection = new Connection(process.env.SOLANA_NODE_URL);
 
     const accounts = await getTokenAccounts(wallet, connection);
     const parsed = parseTokenAccounts(accounts);
@@ -40,6 +48,68 @@ router.get('/', async (request, response, next) => {
     console.error(error);
     return response.status(500).json({ error: error.message });
   }
+});
+
+router.get('/nft', passport.authenticate('jwt', { session: false }), async (request, response, next) => {
+    // Get username:
+    const userId = request.user.id;
+    if (!userId) return next(createError(401));
+
+    try {
+      const user = await User.getById(userId);
+      const username = user.username;
+
+      const MintedNft = require('../../shared/minted-nft');
+      const nft = await MintedNft.getByUsername(username);
+
+      return response.json({ nft });
+
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ error: error.message });
+    }
+});
+
+router.post('/nft', passport.authenticate('jwt', { session: false }), async (request, response, next) => {
+  // Get username:
+  const userId = request.user.id;
+  if (!userId) return next(createError(401));
+
+  const { image, wallet } = request.body;
+  if (!image) return next(createError(400, 'Image is not set'));
+  if (!wallet) return next(createError(400, 'Wallet address is not set'));
+
+  try {
+    const user = await User.getById(userId);
+    const MintedNft = require('../../shared/minted-nft');
+    const Image = require('../../shared/image');
+
+    // Does NFT exist for given username?
+    const existingNft = await MintedNft.getByUsername(user.username);
+    if (existingNft) return next(createError(400, 'Username already exists as NFT'));
+
+    // Upload image to Cloudinary and get back URL:
+    const uploadedImage = (await Image.uploadDataUrl(image)).secure_url;
+
+    // Create NFT:
+    const nft = await createUserNft(user.username, uploadedImage, wallet);
+    const address = nft.address.toString();
+
+    // Verify NFT is in collection:
+    await verifyUserNft(address);
+
+    // Add to list of NFTs:
+    const minted = await MintedNft.create(user.username, uploadedImage, wallet, address);
+
+    console.log(minted);
+
+    return response.json({ nft: minted });
+
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({ error: error.message });
+  }
+
 });
 
 module.exports = router;

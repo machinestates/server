@@ -1,0 +1,22 @@
+{
+  "name": "Kikai Hashimoto",
+  "symbol": "MS",
+  "description": "Creator of HASHCOIN",
+  "seller_fee_basis_points": 0,
+  "image": "https://machinestates.s3.amazonaws.com/avatar-kikai-hashimoto.gif",
+  "external_url": "https://www.machinestates.com",
+  "attributes": [
+    {
+      "trait_type": "avatar",
+      "value": "yes"
+    },
+    {
+      "trait_type": "rare",
+      "value": "yes"
+    }
+  ],
+  "collection": {
+     "name": "Machinestates X NFT",
+     "family": "Machinestates"
+  }
+}

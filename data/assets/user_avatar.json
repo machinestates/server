@@ -1,0 +1,21 @@
+{
+  "name": "",
+  "symbol": "MS",
+  "seller_fee_basis_points": 500,
+  "image": "",
+  "external_url": "https://www.machinestates.com",
+  "attributes": [
+    {
+      "trait_type": "avatar",
+      "value": "yes"
+    },
+    {
+      "trait_type": "common",
+      "value": "yes"
+    }
+  ],
+  "collection": {
+     "name": "Machine States",
+     "family": "Machine States"
+  }
+}
