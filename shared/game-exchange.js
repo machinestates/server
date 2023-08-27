@@ -34,6 +34,7 @@ class GameExchange {
           squareImage: _.get(coin, 'squareImage'),
           description: _.get(coin, 'description'),
           uuid: _.get(coin, 'uuid'),
+          color: _.get(coin, 'color'),
           buyQuantity: 0,
           sellQuantity: 0,
           price: 100,

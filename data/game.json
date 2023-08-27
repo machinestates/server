@@ -111,7 +111,7 @@
       "uuid": "41f97144-79dd-4a6b-820e-3788b209b805",
       "image": "https://machinestates.s3.amazonaws.com/hashcoin-icon-2500.png",
       "iconImage": "https://machinestates.s3.amazonaws.com/hashcoin-icon-250.png",
-      "color": "#754dff",
+      "color": "#7a58ff",
       "minimumPrice": 15000,
       "maximumPrice": 29000,
       "expensive": {
@@ -137,7 +137,7 @@
       "uuid": "645480d6-74a1-4b26-8cc7-4c1e0f446860",
       "image": "https://machinestates.s3.amazonaws.com/qtap-icon-2500.png",
       "iconImage": "https://machinestates.s3.amazonaws.com/qtap-icon-250.png",
-      "color": "#b01f24",
+      "color": "#ed242a",
       "minimumPrice": 5500,
       "maximumPrice": 13000,
       "expensive": {
@@ -207,7 +207,7 @@
       "uuid": "174b3e8c-6a8c-47f0-baf4-7c71d026b0d3",
       "image": "https://machinestates.s3.amazonaws.com/wobbie-icon-2500.png",
       "iconImage": "https://machinestates.s3.amazonaws.com/wobbie-icon-250.png",
-      "color": "#1301de",
+      "color": "#8aadf5",
       "minimumPrice": 90,
       "maximumPrice": 250,
       "expensive": {
@@ -233,7 +233,7 @@
       "uuid": "00ceb9bb-ceb2-4b66-82c1-949239cc8f36",
       "image": "https://machinestates.s3.amazonaws.com/msynchro-icon-2500.png",
       "iconImage": "https://machinestates.s3.amazonaws.com/msynchro-icon-250.png",
-      "color": "#592c1c",
+      "color": "#dbbf6b",
       "minimumPrice": 25,
       "maximumPrice": 300,
       "cheap": {

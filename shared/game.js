@@ -263,14 +263,15 @@ class Game {
     // Create audio from story:
     const audio = await createSpeechFromText(story);
 
+    let minted = false;
+
     // Transfer the Solana tokens, first, if applicable:
     if (Game.canMint(game)) {
       for await (const coin of inventoryCoins) {
-        if (coin.name.toUpperCase() === 'M-SYNCHRO' && game.publicKey) {
-          console.log(`Transferring ${coin.amount} ${coin.name} tokens to: ${game.publicKey}`);
-          const transaction = await Solana.transferTokens(game.publicKey, coin.name, coin.amount);
-          coin.transaction = transaction;
-        }
+        console.log(`Transferring ${coin.amount} ${coin.name} tokens to: ${game.publicKey}`);
+        const transaction = await Solana.transferTokens(game.publicKey, coin.name, coin.amount);
+        coin.transaction = transaction;
+        minted = true;
       };
     }
 
@@ -284,8 +285,6 @@ class Game {
       lastDay: _.get(game, 'lastDay')
     }
     const round = await TradingGameRound.create(entry);
-
-    let minted = null;
 
     // Check mint status - if so, mint coins to database:
     /**if (Game.canMint(game)) {

@@ -25,21 +25,25 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
   
     const complete = [];
     for (const token of parsed) {
-      const metadata = await getMetadata(token.mintAddress, connection);
-  
-      // If NFT flag set, we check metadata if NFT:
-      if (type) {
-        if (metadata.model === type) {
+      try {
+        const metadata = await getMetadata(token.mintAddress, connection);
+        // If NFT flag set, we check metadata if NFT:
+        if (type) {
+          if (metadata.model === type) {
+            complete.push({
+              ...token,
+              metadata
+            })
+          }
+        } else {
           complete.push({
             ...token,
             metadata
           })
         }
-      } else {
-        complete.push({
-          ...token,
-          metadata
-        })
+      } catch (error) {
+        console.error(error);
+        continue;
       }
     }
   

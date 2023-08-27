@@ -10,7 +10,18 @@ const secret = require('../config/solana-secret.json');
  */
 function getAddressFromName(name) {
   const addresses = [
-    { name: 'M-SYNCHRO', address: 'FUWTYRdxhQp5eWFSRJEHRk9Dy95CdCaXuGZ9P1ptGEJQ' }
+    { name: 'M-SYNCHRO', address: 'FUWTYRdxhQp5eWFSRJEHRk9Dy95CdCaXuGZ9P1ptGEJQ' },
+    { name: 'CACHE', address: '5Rtn6LA7EcH1SEzcckHydgWRKZFm4WgK1LjYKMyKdjYy' },
+    { name: 'SPECTR', address: 'GitkztYracfAXsH4rrYZcozKbmkxNc9WomVxvH1Gi3vR' },
+    { name: 'HASHCOIN', address: '5jPEqxsntEDrtZAVR6z1m9VxHx2TnVgSX6E5oDAHkTJe' },
+    { name: 'KAIOTE', address: '7TT8C8Hf4WcuVpjdnuzWsv6AkxVJCkSXWPBhGpAiDtT2' },
+    { name: 'QTAP', address: '73R63RntAjDxjm4Z1L1ydzpLXxcscp9jc6Sth8Yq4Dhh' },
+    { name: 'YEM', address: 'EqE2J7z9N5diAKaxHJRdcVEpDY2Gssnh5pRUL32GYoSS' },
+    { name: 'SYNTHGANIX', address: '7LAoBENvwUE4LoduuV746DeEzJfiWRBvsJwtytNt4wuh' },
+    { name: 'HYPRCHAIN', address: 'v32jEEByAB6d7k7hLU2sLXKE1jKgBjJoMPeCway39t4' },
+    { name: 'PLATELETS', address: 'DpGH8sqySoFL7uWKrNqrQsHbmK6WRos9FPshzT8BPJW9' },
+    { name: 'WOBBIE', address: 'D7nRnjpVQGtELULx2FYvLb3VmDrzFcfL1ufKVZq8RQ8H' },
+    { name: 'FEDCRED', address: '2G2vdLZ9ycLT9arhEBkdZ9craKSfNJUWdrQDfpT6ysrT' }
   ];
   return addresses.find(address => address.name === name).address;
 }
