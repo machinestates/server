@@ -45,6 +45,31 @@ async function createUserNft(username, image, address) {
   return nft;
 }
 
+async function getNftsByOwner(address) {
+  const connection = new Connection(process.env.SOLANA_NODE_URL);
+  const wallet = Keypair.fromSecretKey(new Uint8Array(secret));
+
+  const metaplex = Metaplex.make(connection)
+      .use(keypairIdentity(wallet))
+      .use(bundlrStorage());
+
+  const nfts = await metaplex
+  .nfts()
+  .findAllByOwner({
+      owner: new PublicKey(address),
+  });
+
+  const nftsWithMetadata = [];
+  for await (const metadata of nfts) {
+    try {
+      nftsWithMetadata.push(await metaplex.nfts().load({ metadata }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return nftsWithMetadata;
+}
+
 async function verifyUserNft(address) {
   const connection = new Connection(process.env.SOLANA_NODE_URL);
   const wallet = Keypair.fromSecretKey(new Uint8Array(secret));
@@ -77,5 +102,6 @@ function setMetadata(username, image) {
 module.exports = {
   setMetadata,
   createUserNft,
-  verifyUserNft
+  verifyUserNft,
+  getNftsByOwner
 }

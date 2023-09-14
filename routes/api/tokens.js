@@ -10,7 +10,7 @@ const { Connection, clusterApiUrl } = require('@solana/web3.js');
 const { getTokenAccounts, parseTokenAccounts, getMetadata } = require('../../shared/solana');
 
 const User = require('../../shared/user');
-const { createUserNft, verifyUserNft } = require ('../../shared/nft');
+const { createUserNft, verifyUserNft, getNftsByOwner } = require ('../../shared/nft');
 
 
 router.get('/', passport.authenticate('jwt', { session: false }), async (request, response, next) => {
@@ -48,6 +48,18 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
     }
   
     return response.json({ tokens: complete });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/nfts', passport.authenticate('jwt', { session: false }), async (request, response, next) => {
+  const wallet = request.query.wallet;
+
+  try {
+    const nfts = await getNftsByOwner(wallet);
+    return response.json({ tokens: nfts });
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: error.message });
