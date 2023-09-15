@@ -12,6 +12,8 @@ class GameExchange {
     this.fiatcoin = fiatcoin;
     this.hasStore = exchange.hasStore;
     this.hasDanger = GameExchange.getDanger(exchange.danger, ghosted);
+    this.explored = false;
+    this.found = null;
     this.coins = GameExchange.getCoinPrices(exchange, coins);
     this.lossFromDanger = GameExchange.getLossFromDanger(this.hasDanger, fiatcoin);
     this.ensureCacheAtTentCity(coins);

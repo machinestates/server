@@ -28,6 +28,21 @@ async function createStory(handle, log) {
   return completion.data.choices[0].message.content;
 }
 
+async function createExploreStory(description) {
+  const prompt = `Write a one paragraph story from this sentence, "${description}" Make it in second person.`;
+
+  const messages = [];
+  messages.push({ role: 'user', content: prompt });
+
+  const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages
+  });
+
+  return completion.data.choices[0].message.content;
+}
+
 module.exports = {
-  createStory
+  createStory,
+  createExploreStory
 }

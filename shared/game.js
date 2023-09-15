@@ -6,6 +6,7 @@ const coins = require('../data/game').coins;
 const GameExchange = require('./game-exchange');
 const GameInventory = require('./game-inventory');
 const GameItem = require('./game-item');
+const GameExplore = require('./game-explore');
 const Coin = require('./coin');
 const User = require('../models').User;
 const UserItem = require('../models').UserItem;
@@ -38,6 +39,10 @@ class Game {
   static async doAction(game, body) {
     const action = _.get(body, 'action');
     if (!action) throw new Error('No action provided.');
+
+    if (action === 'explore') {
+      return await Game.explore(game);
+    }
 
     if (action === 'sell') {
       const name = _.get(body, 'coin');
@@ -119,6 +124,10 @@ class Game {
     } else {
       return game;
     }
+  }
+
+  static async explore(game) {
+    return await GameExplore.explore(game);
   }
 
   static canBuy(game, name, quantity) {
