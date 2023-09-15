@@ -11,6 +11,25 @@ async function setGameState(uuid, state) {
   await client.disconnect();
 }
 
+async function setAvatars(wallet, avatars) {
+  await client.connect();
+  avatars = { avatars: avatars };
+  await client.hSet(`avatars-${wallet}`, avatars);
+  await client.expire(`avatars-${wallet}`, 60 * 5);
+  await client.disconnect();
+}
+
+async function getAvatars(wallet) {
+  await client.connect();
+  const avatars = await client.hGetAll(`avatars-${wallet}`);
+  await client.disconnect();
+  if (Object.hasOwnProperty.bind(avatars)('avatars')) {
+    return JSON.parse(avatars.avatars);
+  } else {
+    return null;
+  }
+}
+
 async function getGameState(uuid) {
   await client.connect();
   const game = await client.hGetAll(`game-${uuid}`);
@@ -20,7 +39,9 @@ async function getGameState(uuid) {
 
 module.exports = {
   setGameState,
-  getGameState
+  getGameState,
+  setAvatars,
+  getAvatars
 }
 
 

@@ -10,6 +10,7 @@ const { Connection, clusterApiUrl } = require('@solana/web3.js');
 const { getTokenAccounts, parseTokenAccounts, getMetadata } = require('../../shared/solana');
 
 const User = require('../../shared/user');
+const Redis = require('../../shared/redis');
 const { createUserNft, verifyUserNft, getNftsByOwner } = require ('../../shared/nft');
 
 
@@ -18,6 +19,12 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
   const type = request.query.type;
 
   try {
+
+    const cached = await Redis.getAvatars(wallet);
+    if (cached) {
+      return response.json({ tokens: cached });
+    }
+
     const connection = new Connection(process.env.SOLANA_NODE_URL);
 
     const accounts = await getTokenAccounts(wallet, connection);
@@ -47,6 +54,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
       }
     }
   
+    await Redis.setAvatars(wallet, JSON.stringify(complete));
     return response.json({ tokens: complete });
   } catch (error) {
     console.error(error);
