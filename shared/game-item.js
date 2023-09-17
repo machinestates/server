@@ -28,24 +28,16 @@ class GameItem {
 
   static async useItem(game, name, uuid) {
     if (name.toUpperCase() === 'BAG OF FIAT') {
-      // Find valid item:
-      const item = await UserItem.findOne({
-        order: [
-          ['id', 'ASC']
-        ],
-        where: { uuid, name, used: false }
-      });
-      if (!item) throw new Error('Valid item not found.');
 
       // Set state for Bag of Fiat - add $50,000 to FIATCOIN:
       game.inventory.fiatcoin += 50000;
       game.itemsUsed.push('BAG OF FIAT');
 
-      // Set item to used:
-      item.used = true;
-      await item.save();
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
 
-      game.inventory.items = await GameItem.getItems(game);
       game.inventory.log.push(`Day ${game.day}: Used a BAG OF FIAT to add $50,000 to FIATCOIN`);
 
       // Return state:
@@ -53,24 +45,16 @@ class GameItem {
     }
 
     if (name.toUpperCase() === 'GHOST JACKET') {
-      // Find valid item:
-      const item = await UserItem.findOne({
-        order: [
-          ['id', 'ASC']
-        ],
-        where: { uuid, name, used: false }
-      });
-      if (!item) throw new Error('Valid item not found.');
 
       // Set state for Ghost Jacket:
       game.ghosted = true;
       game.itemsUsed.push('GHOST JACKET');
 
-      // Set item to used:
-      item.used = true;
-      await item.save();
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
 
-      game.inventory.items = await GameItem.getItems(game);
       game.inventory.log.push(`Day ${game.day}: Used GHOST JACKET to become invisible to the hackers`);
 
       // Return state:
@@ -78,50 +62,33 @@ class GameItem {
     }
 
     if (name.toUpperCase() === 'EXTENDED TRIP') {
-      // Find valid item:
-      const item = await UserItem.findOne({
-        order: [
-          ['id', 'ASC']
-        ],
-        where: { uuid, name, used: false }
-      });
-      if (!item) throw new Error('Valid item not found.');
-
-
+    
       // Set state for Extended Trip:
       game.lastDay++;
       game.itemsUsed.push('EXTENDED TRIP');
 
-      // Set item to used:
-      item.used = true;
-      await item.save();
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
 
-      game.inventory.items = await GameItem.getItems(game);
+      game.inventory.log.push(`Day ${game.day}: Used EXTENDED TRIP to extend the game by 1 day`);
 
       // Return State:
       return game;
     }
 
     if (name.toUpperCase() === 'HARDWARE WALLET') {
-      // Find valid item:
-      const item = await UserItem.findOne({
-        order: [
-          ['id', 'ASC']
-        ],
-        where: { uuid, name, used: false }
-      });
-      if (!item) throw new Error('Valid item not found.');
-
-
       // Set state for Hardware Wallet:
       game.inventory.coinsCapacity = 200;
       game.itemsUsed.push('HARDWARE WALLET');
 
-      // Set item to used:
-      item.used = true;
-      await item.save();
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
 
-      game.inventory.items = await GameItem.getItems(game);
+      game.inventory.log.push(`Day ${game.day}: Used HARDWARE WALLET to double coin capacity`);
 
       // Return State:
       return game;

@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const OpenAI = require('../shared/openai');
 
+const Item = require('../models').Item;
+const { v4: uuidv4 } = require('uuid');
+
 class GameExplore {
   static async explore(game) {
     const exchangeName = _.get(game, 'exchange.name');
@@ -38,7 +41,7 @@ class GameExplore {
   }
 
   static getRandomGoodOutcome() {
-    const outcomes = ["FIATCOIN"];
+    const outcomes = ["FIATCOIN", "ITEM", "ITEM"];
     const randomIndex = Math.floor(Math.random() * outcomes.length);
     return outcomes[randomIndex];
   }
@@ -46,6 +49,21 @@ class GameExplore {
   static async generateGoodOutcome(game) {
     const outcome = GameExplore.getRandomGoodOutcome();
     const exchangeName = _.get(game, 'exchange.name');
+
+    if (outcome === 'ITEM') {
+      const item = await GameExplore.getRandomItem();
+      item.uuid = uuidv4();
+
+      // TODO: Add item to user's items:
+      game.exchange.found.items = item;
+      game.inventory.items.push(item);
+      
+      // Create one paragraph story about finding an item via OpenAI:
+      game.exchange.found.description = `You found a ${item.name} at ${exchangeName}!`;
+      game.exchange.found.story = await OpenAI.createExploreStory(game.exchange.found.description);
+      
+      game.inventory.log.push(`Day ${game.day}: Explored ${exchangeName} - found a ${item.name}!`);
+    }
 
     if (outcome === 'FIATCOIN') {
       const fiatcoin = GameExplore.generateSkewedFiatcoinNumber();
@@ -60,6 +78,13 @@ class GameExplore {
     }
 
     return game;
+  }
+
+  static async getRandomItem() {
+    const outcomes = [1,2,4,6];
+    const randomIndex = Math.floor(Math.random() * outcomes.length);
+    const id = outcomes[randomIndex];
+    return await Item.findOne({ raw: true, where: { id: id } });
   }
 
   static async generateBadOutcome(game) {
