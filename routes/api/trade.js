@@ -85,9 +85,13 @@ router.get('/scores', async (req, res, next) => {
       limit: 25,
       order: [['score', 'DESC']],
     });
+
+    const earnings = await TradingGameRound.getEarnings();
+    
     const scores = {
       today,
-      alltime
+      alltime,
+      earnings
     }
     return res.json({ scores });
   } catch (error) {

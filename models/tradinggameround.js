@@ -11,9 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models['TradingGameRound'].hasMany(models['TradingGameRoundCoin'], { as: 'coins', foreignKey: 'roundId' });
-
     }
   }
+
+  TradingGameRound.getEarnings = async () => {
+    const query = 'SELECT handle, MAX(profileImage) AS profileImage, SUM(score) AS totalEarnings FROM TradingGameRounds GROUP BY handle ORDER BY totalEarnings DESC LIMIT 25';
+    return sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
+  }
+
   TradingGameRound.init({
     uuid: DataTypes.UUID,
     handle: DataTypes.STRING,

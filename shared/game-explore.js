@@ -89,8 +89,8 @@ class GameExplore {
 
   static async generateBadOutcome(game) {
     const exchangeName = _.get(game, 'exchange.name');
-    // Take 15% of fiatcoin:
-    const loss = Math.round(game.inventory.fiatcoin * 0.15);
+    // Take 30% of fiatcoin:
+    const loss = Math.round(game.inventory.fiatcoin * 0.30);
     game.inventory.fiatcoin -= loss;
 
     if (loss === 0) {
