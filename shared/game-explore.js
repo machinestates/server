@@ -60,7 +60,7 @@ class GameExplore {
       
       // Create one paragraph story about finding an item via OpenAI:
       game.exchange.found.description = `You found a ${item.name} at ${exchangeName}!`;
-      game.exchange.found.story = await OpenAI.createExploreStory(game.exchange.found.description);
+      game.exchange.found.story = await OpenAI.createExploreStory(`${game.exchange.found.description} ${item.description}`);
       
       game.inventory.log.push(`Day ${game.day}: Explored ${exchangeName} - found a ${item.name}!`);
     }
