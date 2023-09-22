@@ -44,6 +44,37 @@ class GameItem {
       return game;
     }
 
+    if (name.toUpperCase() === 'WEED BLUNT') {
+      
+      game.itemsUsed.push('WEED BLUNT');
+
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
+
+      game.inventory.log.push(`Day ${game.day}: Used WEED BLUNT to get high`);
+
+      // Return state:
+      return game;
+    }
+
+    if (name.toUpperCase() === 'BURNER') {
+      
+      game.hasBurner = true;
+      game.itemsUsed.push('BURNER');
+
+      // Remove item:
+      _.remove(game.inventory.items, (item) => {
+        return item.uuid === uuid;
+      });
+
+      game.inventory.log.push(`Day ${game.day}: Used BURNER to protect self from robberies at exchanges`);
+
+      // Return state:
+      return game;
+    }
+
     if (name.toUpperCase() === 'GHOST JACKET') {
 
       // Set state for Ghost Jacket:

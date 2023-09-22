@@ -81,7 +81,7 @@ class GameExplore {
   }
 
   static async getRandomItem() {
-    const outcomes = [1,2,4,6];
+    const outcomes = [1,2,4,6,7,8];
     const randomIndex = Math.floor(Math.random() * outcomes.length);
     const id = outcomes[randomIndex];
     return await Item.findOne({ raw: true, where: { id: id } });
@@ -89,6 +89,17 @@ class GameExplore {
 
   static async generateBadOutcome(game) {
     const exchangeName = _.get(game, 'exchange.name');
+
+
+    if (game.hasBurner) {
+      // Create one paragraph story:
+      game.exchange.found.description = `You were attacked at ${exchangeName}! But your gun protected you!`;
+      game.exchange.found.story = await OpenAI.createExploreStory(game.exchange.found.description);
+      
+      game.inventory.log.push(`Day ${game.day}: Explored ${exchangeName} - and was attacked! But gun (BURNER) protected you!`);
+      return game;
+    }
+
     // Take 30% of fiatcoin:
     const loss = Math.round(game.inventory.fiatcoin * 0.30);
     game.inventory.fiatcoin -= loss;

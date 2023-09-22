@@ -11,6 +11,21 @@ module.exports = {
       {
         name: 'Weed Blunt',
         uuid: v4(),
+        description: 'WEED BLUNT allows you to hit the weed and breathe during a game of TRADING SIMULATION.',
+        imageSource: '',
+        transferable: true,
+        price: 3,
+        forSale: true,
+        equippable: true,
+        usable: false,
+        rarity: 'common',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Burner',
+        uuid: v4(),
+        description: 'BURNER is a gun that prevents robbery during a game of TRADING SIMULATION.',
         imageSource: '',
         transferable: true,
         price: 3,

@@ -28,6 +28,7 @@ class Game {
     this.inventory = new GameInventory(this.handle);
     this.itemsUsed = [];
     this.ghosted = false;
+    this.hasBurner = false;
     this.publicKey = publicKey;
   }
 
