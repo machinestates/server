@@ -15,4 +15,11 @@ describe('EmailAdmin', () => {
       expect(response).toEqual({ MessageId: '123' });
     });
   });
+
+  describe('startToAdmin', () => {
+    test('should send an email', async () => {
+      const response = await EmailAdmin.startToAdmin('test');
+      expect(response).toEqual({ MessageId: '123' });
+    });
+  });
 });

@@ -22,6 +22,15 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
   const image = req.body.image;
 
   try {
+
+    // Email admin about start of round:
+    try {
+      const EmailAdmin = require('../../shared/email-admin');
+      await EmailAdmin.startToAdmin(handle);
+    } catch (error) {
+      console.log(error);
+    }
+
     const game = new Game(handle, image, publicKey);
     game.exchanges = _.map(game.exchanges, exchange => { return new GameExchange(exchange) });
     
