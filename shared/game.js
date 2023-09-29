@@ -296,6 +296,15 @@ class Game {
     }
     const round = await TradingGameRound.create(entry);
 
+
+    // Email admin:
+    try {
+      const EmailAdmin = require('./email-admin');
+      await EmailAdmin.scoreToAdmin(handle, score);
+    } catch (error) {
+      console.log(error);
+    }
+
     // Check mint status - if so, mint coins to database:
     /**if (Game.canMint(game)) {
       minted = await Coin.mint(round, user, inventoryCoins);
