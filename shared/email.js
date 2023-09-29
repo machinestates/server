@@ -1,6 +1,14 @@
+require('dotenv').config();
+
 async function send(input) {
   const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
-  const client = new SESClient({ region: 'us-east-1' });
+  const client = new SESClient({
+    region: 'us-east-1' ,
+    credentials: {
+      accessKeyId: process.env.POLLY_ACCESS_KEY,
+      secretAccessKey: process.env.POLLY_SECRET_KEY
+    }
+  });
   const command = new SendEmailCommand(input);
   return await client.send(command);
 }
