@@ -1,0 +1,70 @@
+<style>
+  main > .container {
+  padding: 60px 15px 0;
+}
+
+.container {
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 72px;
+}
+
+h2 {
+  font-size: 48px;
+}
+</style>
+
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Machine States</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <img class="img-fluid" src="{{ profileImage }}" alt="{{ handle }}" />
+      </div>
+      <div class="col-8">
+        <h1>{{ handle }}</h1>
+        <h2>${{ score }}</h2>
+        <div class="row">
+          <div class="col-1">
+            <i onclick="playAudio()" class="fa-solid fa-play"></i>
+          </div>
+          <div class="col-1">
+            <i class="fa-solid fa-stop" onclick="stopAudio()"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    {{{ story }}}
+  </div>
+</main>
+
+<script>
+  var audio = new Audio('{{ storyAudio }}');
+  
+  function playAudio() {
+    console.log('play audio');
+    audio.play();
+  }
+
+  function stopAudio() {
+    audio.pause();
+  }
+</script>

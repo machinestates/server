@@ -1,6 +1,11 @@
+@font-face {
+  font-family: 'Anton';
+  src: url("/assets/fonts/Anton-Regular.ttf");
+}
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Anton", Helvetica, Arial, sans-serif;
 }
 
 a {
