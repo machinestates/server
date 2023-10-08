@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
+  TradingGameRound.getRoundsCount = async (days) => {
+    const query = `SELECT DATE(createdAt) AS date_only, COUNT(*) AS count FROM TradingGameRounds GROUP BY date_only ORDER BY date_only DESC LIMIT ${days}`;
+    return sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
+
+  }
+
   TradingGameRound.getEarnings = async () => {
     const query = 'SELECT handle, MAX(profileImage) AS profileImage, SUM(score) AS totalEarnings FROM TradingGameRounds GROUP BY handle ORDER BY totalEarnings DESC LIMIT 25';
     return sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
