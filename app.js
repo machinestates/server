@@ -32,6 +32,7 @@ app.use('/trading', require('./routes/trading'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/trade', require('./routes/api/trade'));
 app.use('/api/tokens', require('./routes/api/tokens'));
+app.use('/api/coins', require('./routes/api/coins'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

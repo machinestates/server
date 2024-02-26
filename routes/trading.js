@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var createError = require('http-errors');
+const moment = require('moment');
 
 const TradingGameRound = require('../models').TradingGameRound;
 
@@ -20,8 +21,9 @@ router.get('/:uuid', async (req, res, next) => {
     }
 
     const story = round.story.replace(/\n/g, "<br />");
+    const formattedTime = moment(round.createdAt).format('MMMM Do YYYY, h:mm:ss a');
 
-    const data = { ...round.dataValues, story, title: 'Trading Round' };
+    const data = { ...round.dataValues, story, formattedTime, title: 'Trading Round', layout: 'layout-silicon.hbs' };
     console.log(data);
 
     return res.render('round', data);

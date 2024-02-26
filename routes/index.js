@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Machinestates' });
 });
 
+router.get('/silicon', function(req, res, next) {
+  res.render('silicon', { title: 'Trading Round', layout: 'layout-silicon.hbs' });
+});
+
 module.exports = router;
