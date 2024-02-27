@@ -24,7 +24,7 @@ app.engine('hbs', hbs({
     path.join(__dirname, 'views/partials'),
   ],
   extname: 'hbs',
-  defaultLayout: 'default',
+  defaultLayout: 'silicon',
   helpers: {
     ifEquals: function(arg1, arg2, options) {
       return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -54,13 +54,16 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use((err, req, res, next) => {
-  console.log('An error has occurred:', err.message);
-  console.log(err.stack);
+app.use(async (error, request, response, next) => {
+  console.log('An error has occurred: ', error.message);
 
-  res.status(err.status || 500);
-  return res.json({ message: err.message });
+  response.status(error.status || 500);
+
+  if (request.originalUrl.startsWith('/api')) {
+    return response.json({ message: error.message });
+  } else {
+    return response.render('error', { title: error.status.toString(), status: error.status.toString(), message: error.message });
+  }
 });
 
 module.exports = app;
