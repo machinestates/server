@@ -23,8 +23,19 @@ router.get('/:uuid', async (req, res, next) => {
     const story = round.story.replace(/\n/g, "<br />");
     const formattedTime = moment(round.createdAt).format('MMMM Do YYYY, h:mm:ss a');
 
-    const data = { ...round.dataValues, story, formattedTime, title: 'Trading Round', layout: 'layout-silicon.hbs' };
-    console.log(data);
+    const handle = round.handle;
+    const score = round.score;
+    const image = round.profileImage;
+
+    const data = { 
+      ...round.dataValues, 
+      story, 
+      formattedTime, 
+      title: `${handle} scored $${score}`, 
+      description: `${handle} scored $${ score } in a round of the TRADING SIMULATION.`,
+      image,
+      layout: 'silicon.hbs' 
+    };
 
     return res.render('round', data);
   } catch (error) {

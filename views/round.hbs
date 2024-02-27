@@ -1,70 +1,97 @@
-<style>
-  main > .container {
-  padding: 60px 15px 0;
-}
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
 
-.container {
-  font-size: 20px;
-}
 
-h1 {
-  font-size: 72px;
-}
-
-h2 {
-  font-size: 48px;
-}
-</style>
-
-<header>
-  <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img width="200" src="/images/machinestates.png" /></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-      </div>
-    </div>
-  </nav>
-</header>
-
-<main class="flex-shrink-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-4">
-        <img class="img-fluid" src="{{ profileImage }}" alt="{{ handle }}" />
-      </div>
-      <div class="col-8">
-        <h1>{{ handle }}</h1>
-        <h2>${{ score }}</h2>
-        <div class="row">
-          <div class="col-1">
-            <i onclick="playAudio()" class="fa-solid fa-play"></i>
+      <!-- Navbar -->
+      <!-- Remove "fixed-top" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg bg-light border-bottom border-light shadow-sm fixed-top">
+        <div class="container px-3">
+          <a href="index.html" class="navbar-brand pe-3">
+            <img src="/assets/img/machinestates-2.png" width="200" alt="Machinestates">
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+            </div>
+            <div class="offcanvas-header border-top">
+              <a href="https://trading.machinestates.com" class="btn btn-primary w-100" target="_blank" rel="noopener">
+                <i class="bx bx-candles fs-4 lh-1 me-1"></i>
+                &nbsp;Trade
+              </a>
+            </div>      
           </div>
-          <div class="col-1">
-            <i class="fa-solid fa-stop" onclick="stopAudio()"></i>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="https://trading.machinestates.com" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex" target="_blank" rel="noopener">
+            <i class="bx bx-candles fs-5 lh-1 me-1"></i>
+            &nbsp;Trade
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Page content -->
+      <section class="container pt-5">
+        <div class="row">
+
+  
+          <!-- Sidebar (User info + Account menu) -->
+          <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
+            <div class="position-sticky top-0">
+              <div class="text-center pt-5">
+                <div class="d-table position-relative mx-auto mt-2 mt-lg-4 pt-5 mb-3">
+                  <img src="{{ profileImage }}" alt="{{ handle }}" class="d-block rounded-circle" width="120">
+                </div>
+                <h2 class="h5 mb-3">{{ handle }}</h2>
+              </div>
+            </div>
+          </aside>
+
+
+          <!-- Account details -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <h1 class="h2 pt-xl-1" style="margin-bottom: 0;">${{ score }}</h1>
+              <h2 class="h5 text-primary mb-4">{{ formattedTime }}</h2>
+              <!-- Audio player markup -->
+              <div class="card p-lg-4 p-md-2 mb-4 mb-lg-5">
+                <div class="audio-player card-body p-2 p-sm-4">
+                  
+                  <!-- Audio tag with the link to the audio file -->
+                  <audio  src="{{ storyAudio }}" preload="auto"></audio>
+
+                  <!-- Custom player markup -->
+                  <button type="button" class="ap-play-button btn btn-icon btn-primary shadow-primary" aria-label="Play/pause"></button>
+                  <span class="ap-current-time flex-shr fw-medium mx-3 mx-lg-4">0:00</span>
+                  <input type="range" class="ap-seek-slider" max="100" value="0">
+                  <span class="ap-duration flex-shr fw-medium mx-3 mx-lg-4">0:00</span>
+                  <div class="dropup">
+                    <button type="button" class="ap-volume-button btn btn-icon btn-secondary" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false" aria-label="Volume">
+                      <i class="bx bx-volume-full"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-dark my-1">
+                      <input type="range" class="ap-volume-slider" max="100" value="100">
+                    </div>
+                  </div>
+                  <a href="{{ storyAudio }}" download="audio-sample" class="btn btn-icon btn-secondary ms-2" aria-label="Download">
+                    <i class="bx bx-download"></i>
+                  </a>
+                </div>
+              </div>
+              <p>{{{ story }}}</p>
+
+            </div>
           </div>
         </div>
-
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    {{{ story }}}
-  </div>
-</main>
-
-<script>
-  var audio = new Audio('{{ storyAudio }}');
-  
-  function playAudio() {
-    console.log('play audio');
-    audio.play();
-  }
-
-  function stopAudio() {
-    audio.pause();
-  }
-</script>
+      </section>
+    </main>

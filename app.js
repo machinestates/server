@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors  = require('cors');
 const passport = require('passport');
+const hbs = require('express-handlebars');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -16,6 +17,20 @@ var app = express();
 passport.use('jwt', JWT.strategy);
 
 // view engine setup
+  // view engine setup
+app.engine('hbs', hbs({
+  partialsDir  : [
+    //  path to your partials
+    path.join(__dirname, 'views/partials'),
+  ],
+  extname: 'hbs',
+  defaultLayout: 'default',
+  helpers: {
+    ifEquals: function(arg1, arg2, options) {
+      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    }
+  }
+}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
