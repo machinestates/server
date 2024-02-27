@@ -39,6 +39,7 @@
     {
       "name": "CACHE",
       "uuid": "c50e6f9c-d8ad-4b81-93ac-db65b162a7f3",
+      "tokenAddress": "5Rtn6LA7EcH1SEzcckHydgWRKZFm4WgK1LjYKMyKdjYy",
       "image": "https://machinestates.s3.amazonaws.com/cache-icon-2500.png",
       "iconImage": "https://machinestates.s3.amazonaws.com/cache-icon-250.png",
       "color": "#95f6be",
