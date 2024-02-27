@@ -249,7 +249,7 @@ class Game {
     const debt = _.get(game, 'inventory.debt');
 
     // If score is over $100,000, there is no debt, and the player holds coins:
-    return !!(score >= 100000 && debt <= 0 && coins);
+    return !!(score >= 300000 && debt <= 0 && coins);
   }
 
   static async completeGame(game) {
