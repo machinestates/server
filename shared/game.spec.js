@@ -4,7 +4,7 @@ describe('Game', () => {
   describe('canMint()', () => {  
     test('should return true if all condition are met - fiatcoin, coins, debt', () => {
       const game = { 
-        inventory: { fiatcoin: 350000, coins: [ { name: 'CACHE', amount: 50 }], debt: 0 } 
+        inventory: { fiatcoin: 500000, coins: [ { name: 'CACHE', amount: 50 }], debt: 0 } 
     };
       const result = Game.canMint(game);
       expect(result).toBe(true);
@@ -20,7 +20,7 @@ describe('Game', () => {
   
     test('should return false if the player has debt', () => {
       const game = { 
-        inventory: { fiatcoin: 150000, coins: [ { name: 'CACHE', amount: 50 }], debt: 1000 } 
+        inventory: { fiatcoin: 550000, coins: [ { name: 'CACHE', amount: 50 }], debt: 1000 } 
     };
       const result = Game.canMint(game);
       expect(result).toBe(false);
@@ -28,7 +28,7 @@ describe('Game', () => {
   
     test('should return false if the player has no coins', () => {
       const game = { 
-        inventory: { fiatcoin: 350000, coins: [], debt: 1000 } 
+        inventory: { fiatcoin: 550000, coins: [], debt: 1000 } 
     };
       const result = Game.canMint(game);
       expect(result).toBe(false);
