@@ -3,6 +3,7 @@ const router = express.Router();
 const createError = require('http-errors');
 
 const coins = require('../data/coins').coins;
+const { getPrice } = require('../shared/birdeye');
 
 router.get('/:coin', async (req, res, next) => {
 
@@ -11,14 +12,17 @@ router.get('/:coin', async (req, res, next) => {
 
   try {
     if (!coin) {
-      return next(createError(404, 'This coin was not found!'));
+      return next(createError(404, 'This coin was not found.'));
     }
+
+    const price = coin.tokenAddress ? await getPrice(coin.tokenAddress) : undefined;
 
     const data = { 
       ...coin,
       title: coin.name,
       description: coin.description,
       image: coin.image,
+      price: price,
       layout: 'silicon.hbs' 
     };
 

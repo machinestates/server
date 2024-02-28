@@ -17,6 +17,7 @@
     "@metaplex-foundation/js": "^0.19.4",
     "@solana/spl-token": "^0.3.4",
     "@solana/web3.js": "1.56",
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.0",
     "check-password-strength": "^2.0.7",
     "cloudinary": "^1.37.3",
