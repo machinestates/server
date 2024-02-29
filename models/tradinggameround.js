@@ -20,6 +20,21 @@ module.exports = (sequelize, DataTypes) => {
 
   }
 
+  TradingGameRound.getTrader = async (handle) => {
+    const query = `
+      SELECT 
+      handle,
+      MAX(profileImage) AS profileImage, 
+      SUM(score) AS totalEarnings,
+      COUNT(id) AS totalRounds,
+      (SELECT createdAt FROM TradingGameRounds WHERE handle = :handle ORDER BY score DESC LIMIT 1) AS createdAt, 
+      (SELECT story FROM TradingGameRounds WHERE handle = :handle ORDER BY score DESC LIMIT 1) AS story, 
+      (SELECT storyAudio FROM TradingGameRounds WHERE handle = :handle ORDER BY score DESC LIMIT 1) AS storyAudio, 
+      (SELECT score FROM TradingGameRounds WHERE handle = :handle ORDER BY score DESC LIMIT 1) AS score 
+      FROM TradingGameRounds WHERE handle = :handle LIMIT 1`;
+    return sequelize.query(query, { replacements: { handle }, type: sequelize.QueryTypes.SELECT });
+  }
+
   TradingGameRound.getEarnings = async () => {
     const query = 'SELECT handle, MAX(profileImage) AS profileImage, SUM(score) AS totalEarnings FROM TradingGameRounds GROUP BY handle ORDER BY totalEarnings DESC LIMIT 25';
     return sequelize.query(query, { type: sequelize.QueryTypes.SELECT });

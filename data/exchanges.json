@@ -1,0 +1,64 @@
+{
+  "exchanges": [
+    {
+      "name": "TENT CITY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-tent-city-600.png",
+      "description": "TENT CITY is one of the only open places where you can meet new people. The residents are skeptical of outside 'tech' influence. 1337 installed secure networks that are powered by unknown power sources. It offers a safe exchange, but it also offers few coins.",
+      "shortDescription": "TENT CITY is one of the only open places where you can meet new people. It offers a safe exchange, but it also offers few coins."
+    },
+    {
+      "name": "FEDERAL COIN SERVICE",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-federal-coin-service-600.png",
+      "description": "FEDERAL COIN SERVICE, or FCS, is a converted federal post office and relic from the days before large tech companies running all government. It is a relatively safe (and boring) exchange.",
+      "shortDescription": "FEDERAL COIN SERVICE, or FCS, is a converted federal post office and relic from the days before large tech companies running all government."
+    },
+    {
+      "name": "PLASMANET",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-plasmanet-600.png",
+      "description": "PLASMANET bolsters the only mainstream debt service in MEGACITY: PLASMADEBT. Despite it being a fairly dangerous place to go, all traders must go to PLASMANET to pay their debts, and to borrow more money.",
+      "shortDescription": "PLASMANET bolsters the only mainstream debt service in MEGACITY: PLASMADEBT. Despite it being a fairly dangerous place to go, all traders must go to PLASMANET to pay their debts, and to borrow more money."
+    },
+    {
+      "name": "VYPR",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-vypr-600.png",
+      "description": "Made up of bounty hunters, VYPR was a main force in the GREAT TECH WAR. Their exchange bolsters a huge menu of coins to trade to lure you in, but beware: it is a very dangerous place to go.",
+      "shortDescription": "Made up of bounty hunters, VYPR was a main force in the GREAT TECH WAR. Their exchange bolsters a huge menu of coins to trade to lure you in, but beware: it is a very dangerous place to go."
+    },
+    {
+      "name": "UNIT COLONY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-unit-colony-600.png",
+      "description": "UNIT COLONY is a social service-based group involved in agriculture and the drug industries. It is known as one of the safer exchanges in MEGACITY.",
+      "shortDescription": "UNIT COLONY is a social service-based group involved in agriculture and the drug industries. It is known as one of the safer exchanges in MEGACITY."
+    },
+    {
+      "name": "CHARLOTTESWEB",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-charlottes-web-600.png",
+      "description": "One of the safest exchanges in MEGACITY, CHARLOTTESWEB has an internal AI network to keep transactions out of harm's way. It was rumored to have been created by CJ and HASHIMOTO during the GREAT TECH WAR.",
+      "shortDescription": "One of the safest exchanges in MEGACITY, CHARLOTTESWEB has an internal AI network to keep transactions out of harm's way."
+    },
+    {
+      "name": "VEGA CITY",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-vega-city-600.png",
+      "description": "VEGA CITY is the fun place to be in TENT CITY. It is fun, at all costs. The VEGA CITY exchange offers a good amount of coins, but it can also be quite dangerous.",
+      "shortDescription": "VEGA CITY is the fun place to be in TENT CITY. It is fun, at all costs. The VEGA CITY exchange offers a good amount of coins, but it can also be quite dangerous."
+    },
+    {
+      "name": "PORT 23",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-port23-600.png",
+      "description": "PORT 23 are the masters of manufacturing. It is a hard company to trust - and lacks any human ownership. It has a fairly strong coin offering, and a moderate amount of danger lurks.",
+      "shortDescription": "PORT 23 are the masters of manufacturing and lacks any human ownership. It has a fairly strong coin offering, and a moderate amount of danger lurks."
+    },
+    {
+      "name": "JADE ROAD",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-jade-road-600.png",
+      "description": "On any given day, JADE ROAD can offer the largest market for trading coins. While there are constant attempts to keep crime low, it can be a favorite target of cyber-muggers.",
+      "shortDescription": "On any given day, JADE ROAD can offer the largest market for trading coins. While there are constant attempts to keep crime low, it can be a favorite target of cyber-muggers."
+    },
+    {
+      "name": "WI-FU",
+      "image": "https://megacity-assets.s3.amazonaws.com/exchange-wi-fu-600.png",
+      "description": "WI-FU (or WIRELESS FUSION) is a megacorp that produces and trades power. Depending on the power and communications markets, they sometimes offer little or a lot of coins to trade. They also tend to keep the crime down.",
+      "shortDescription": "WI-FU (or WIRELESS FUSION) is a megacorp that produces and trades power. Depending on the power and communications markets, they sometimes offer little or a lot of coins to trade. They also tend to keep the crime down."
+    }
+  ]
+}

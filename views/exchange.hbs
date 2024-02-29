@@ -1,0 +1,33 @@
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+      {{> silicon/navbar }}
+
+      <!-- Page content -->
+      <section class="container pt-5">
+        <div class="row">
+  
+          <!-- Exchange -->
+          <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
+            <div class="position-sticky top-0">
+              <div class="text-center pt-5">
+                <div class="d-table position-relative mx-auto mt-2 mt-lg-4 pt-5 mb-3">
+                  <img src="{{ image }}" alt="{{ name }}" class="d-block rounded-circle" width="120">
+                </div>
+                <h2 class="h5 mb-3">{{ name }}</h2>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Story -->
+          <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+            <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
+              <h1 class="h2 pt-xl-1" style="margin-bottom: 0;">{{ name }}</h1>
+              <p>{{ description }}</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
